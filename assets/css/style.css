@@ -1,0 +1,61 @@
+a.brand-logo img {
+    width: 100%;
+}
+
+button#kt_aside_toggle {
+    position: relative;
+    right: -12px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #242939; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading .menu-icon.svg-icon svg g [fill], .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link .menu-icon.svg-icon svg g [fill] {
+    fill: #ce923c!important;
+}
+
+.themebtn{
+    color: #FFFFFF!important;
+    background-color: #ce923c!important;
+    border-color: #ce923c!important;
+}
+
+.mentions-autocomplete-list{
+  display: block!important;
+    position: absolute!important;
+    top: -71px!important;
+}
+
+.contract{
+    text-align: left!important;
+    border: 1px solid #ce923c!important;
+    padding: 0px 20px!important;
+    height: 440px!important;
+    overflow-y: scroll;
+}
+.contract ol {
+    padding: 0px!important;
+}
+.contract ol li {
+    width: 100%;
+    color: #ce923c;
+    font-weight: bold;
+    text-transform: capitalize;
+}

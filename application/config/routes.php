@@ -79,6 +79,9 @@ $route['signup'] = 'auth/create_user';
 //investor list
 $route['investor/list'] = 'investor/list';
 //invest Now
+// add investor
+$route['investor/add_investment'] = 'investor/add_investment';
+//create investment
 $route['investor/invest_now'] = 'investor/invest_now';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -1,13 +1,15 @@
 "use strict";
 
 // Class definition
-var KTWizard5 = function () {
+var lastPaymentId = 0;
+var investmenForm = function () {
 	// Base elements
 	var _wizardEl;
 	var _formEl;
 	var _wizardObj;
 	var _validations = [];
-
+	var deleteStep = 0;
+	
 	// Private functions
 	var _initWizard = function () {
 		// Initialize form wizard
@@ -52,7 +54,6 @@ var KTWizard5 = function () {
 
 		// Change event
 		_wizardObj.on('changed', function (wizard) {
-			console.log(chanelArray);
 			var ChannelReplace = '<ol>';
 			var ChannelsIds = {
 				'food' : 'Food lover Distrct (ID no. UC5OXEAL2wW7ccJu3gEZnl0w)',
@@ -67,9 +68,10 @@ var KTWizard5 = function () {
 			  ChannelReplace += `<li>${i + '. ' + ChannelsIds[key]}</li>`;
 			  Own += `<span>${i + '.' +chanelArray[key]+'% '}</span>`;
 			  ChannelVat += `<span>${i + '.' +(parseInt(chanelArray[key]) / parseInt(ChannelPrice))  * parseInt(ChannelVat)+' '}</span>`;
-			  PriceTot += (parseInt(chanelArray[key]) * ChannelPrice);
+			  PriceTot += (parseInt(chanelArray[key]) * parseInt(ChannelPrice));
 			  i++;
 			}
+			$('.total_investment').val(PriceTot);
 			ChannelReplace += '</ol>';
 			if(wizard.getStep() == 4){
 				var getContract = $('.contract').html();
@@ -90,13 +92,48 @@ var KTWizard5 = function () {
 
 				$('.contract').html(replaced);
 			}
+
+			if(deleteStep > 4){
+				$.ajax({
+			          url:BASEURL+"investor/delete_investment",
+			          method: 'post',
+			          data: {
+			          	lastPaymentId : lastPaymentId
+			          },
+			          dataType: "json",
+			          success: function( response ) {
+
+			          }
+			    })
+				deleteStep = 0;
+			}
+
+			if(wizard.getStep() == 5){
+				deleteStep = wizard.getStep();
+				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button></div>`);
+				$('.contract_val').val($('.contract').html());
+				$.ajax({
+			          url:BASEURL+"investor/add_investment",
+			          method: 'post',
+			          data: $('#investmenForm').serialize(),
+			          dataType: "json",
+			          success: function( response ) {
+			          	lastPaymentId = response;
+			          }
+			        })
+			}
 			KTUtil.scrollTop();
 		});
 
 		// Submit event
-		_wizardObj.on('submit', function (wizard) {
+		_wizardObj.one('submit', function (wizard) {
+			// alert('asd');
 			Swal.fire({
-				text: "All is good! Please confirm the form submission.",
+				html: `
+				All is good! Proceed To Submit
+				`,
 				icon: "success",
 				showCancelButton: true,
 				buttonsStyling: false,
@@ -121,6 +158,7 @@ var KTWizard5 = function () {
 					});
 				}
 			});
+			return false;
 		});
 	}
 
@@ -251,13 +289,79 @@ var KTWizard5 = function () {
 				}
 			}
 		));
+		// Step 3
+		_validations.push(FormValidation.formValidation(
+			_formEl,
+			{
+				fields: {
+					delivery: {
+						validators: {
+							notEmpty: {
+								message: 'Delivery type is required'
+							}
+						}
+					},
+					packaging: {
+						validators: {
+							notEmpty: {
+								message: 'Packaging type is required'
+							}
+						}
+					},
+					preferreddelivery: {
+						validators: {
+							notEmpty: {
+								message: 'Preferred delivery window is required'
+							}
+						}
+					}
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap()
+				}
+			}
+		));
+		// Step 3
+		_validations.push(FormValidation.formValidation(
+			_formEl,
+			{
+				fields: {
+					delivery: {
+						validators: {
+							notEmpty: {
+								message: 'Delivery type is required'
+							}
+						}
+					},
+					packaging: {
+						validators: {
+							notEmpty: {
+								message: 'Packaging type is required'
+							}
+						}
+					},
+					preferreddelivery: {
+						validators: {
+							notEmpty: {
+								message: 'Preferred delivery window is required'
+							}
+						}
+					}
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap()
+				}
+			}
+		));
 	}
 
 	return {
 		// public functions
 		init: function () {
 			_wizardEl = KTUtil.getById('kt_wizard');
-			_formEl = KTUtil.getById('kt_form');
+			_formEl = KTUtil.getById('investmenForm');
 
 			_initWizard();
 			_initValidation();
@@ -266,7 +370,7 @@ var KTWizard5 = function () {
 }();
 
 jQuery(document).ready(function () {
-	KTWizard5.init();
+	investmenForm.init();
 });
 
 var chanelArray = [];
@@ -285,11 +389,86 @@ $(document).ready(function(){
 	});
 
 	$(document).on('change','select',function(){
-		console.log($(this).val());
-	    var getChannel = $(this).attr('name');
+	    var getChannel = $(this).attr('data-name');
 	    console.log('.'+getChannel+'_invest');
 	    $('.'+getChannel+'_invest').html($(this).val()); 
 		chanelArray[getChannel] = $(this).val();
 	});
 
+	
+	$(document).on('click','.paymentBtn',function(e){
+		e.preventDefault();
+		var getPaymentMethod = $(this).data('type');
+		$.ajax({
+	          url:BASEURL+"investor/update_payment_method",
+	          method: 'post',
+	          data: {
+	          	getPaymentMethod : getPaymentMethod,
+	          	lastPaymentId : lastPaymentId
+	          },
+	          dataType: "json",
+	          success: function( response ) {
+	          	if( response.msg == 'success'){
+	          		location.reload();
+	          	}
+	          }
+	    })
+	});	
+
+
+ // PAYPAL BUTTON
+ paypal.Buttons({
+ 	locale: 'en_US',
+ 	style: {
+ 		size: 'small',
+ 		color: 'gold',
+ 		shape: 'pill',
+ 		label: 'checkout',
+ 	},
+ 	createOrder: function(data, actions) {
+
+ 		return actions.order.create({
+ 			purchase_units: [{
+ 				amount: {
+ 					value: '1',
+ 				}
+ 			}]
+ 		});
+ 	},
+ 	onClick: function (data, actions) {
+ 		console.log(data);
+ 		$('.paypal_btn_div').css({
+ 			'position': 'static',
+ 			'z-index': '-1',
+ 		});
+ 	},
+ 	onCancel: function(data, actions) {
+ 		console.log(data);
+ 	},
+ 	onError: function (err,data) {
+ 		console.log(data);
+ 	},
+ 	onApprove: function(data, actions) {
+ 		var orderId = data.orderID;
+ 		return actions.order.capture().then(function(details) {
+ 			var mapIDArray = [details.create_time,details.update_time,details.id,details.status,details.links[0].href,details.payer.address.country_code,details.payer.email_address,details.payer.name.given_name,details.payer.payer_id,details.purchase_units[0].amount.value,details.purchase_units[0].payee.merchant_id,orderId,lastPaymentId];
+ 			$.getJSON(BASEURL+"/payments/paypal/paypalPaymentMultiple" , { mapIDs: mapIDArray}, function(data){});
+ 			$.ajax({
+ 				url:BASEURL+"investor/update_payment_method",
+ 				method: 'post',
+ 				data: {
+ 					getPaymentMethod : 'PAYPAL',
+ 					lastPaymentId : lastPaymentId
+ 				},
+ 				dataType: "json",
+ 				success: function( response ) {
+ 					if( response.msg == 'success'){
+ 						location.reload();
+ 					}
+ 				}
+ 			})
+ 		});
+ 		 	}
+ }).render('#paypal-button-container');
+ // PAYPAL BUTTON END
 });

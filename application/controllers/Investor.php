@@ -40,8 +40,125 @@ class Investor extends CI_Controller {
 
 	public function invest_now()
 	{
+		$_SESSION['COUNT'] = 0;
 		$data['getContract'] = $this->investor_model->getContractByLang();
+		$data['getChannels'] = $this->investor_model->getChannels();
 		$data['user'] = $this->investor_model->getCurrentUser();
 		$this->page_construct('investor/invest_now',$data);
 	}
+
+	
+	public function add_investment()
+	{
+		//for channels
+		$channelArray = array();
+		//for comma seprated channel id
+		$commaSepratedChannelId = array();
+		//filter the empty investment value
+		if(isset($_POST['channels'])){
+			foreach ($_POST['channels'] as $key => $value) {
+				if(!empty($value)){
+					$channelArray[$key] = $value; 
+					$commaSepratedChannelId[] = $key;
+				}
+			}
+		}
+		//inserting the payment
+		//making data for payment
+		$payment_data = array(
+			'created_by' => $this->session->userdata('user_id'),
+			'total_investment' => $this->input->post('total_investment'),
+		);
+		$payment_id = $this->investor_model->addPayment($payment_data);
+		//insert payment end
+		//making data for investment and insert into loop 
+		foreach ($channelArray as $channel_id => $channel_percent) {
+			$channelShare = $this->investor_model->getChannelShareById($channel_id);
+			$investment_data[] = array(
+			'channel_id' => $channel_id,
+			'payment_id' => $payment_id['data'][0]['id'],
+			'amount' => $channel_percent * $channelShare,
+			'percentage' => $channel_percent,
+			);
+		}
+		//insert the investment
+		$investment_result = $this->investor_model->addInvestments($investment_data);
+		//making the contract data
+		//making the comma seprtaed id's of channel
+		$commaSepratedChannelId = implode(',', $commaSepratedChannelId);
+		$i_contract_data = array(
+			'channels' => $commaSepratedChannelId,
+			'contract' => $this->input->post('contract'),
+			'payment_id' => $payment_id['data'][0]['id'],
+			'contract_id' => $this->input->post('contract_id'),
+
+		);
+		$i_contract_result = $this->investor_model->addContract($i_contract_data);
+		echo json_encode($payment_id['data'][0]['id']);
+	}
+
+	public function update_payment_method(){
+		$res = $this->investor_model->updatePayment($_POST['lastPaymentId'],$_POST['getPaymentMethod']);
+		$this->session->set_flashdata('message', 'Request Has Been Send!');
+		echo json_encode($res);
+	}
+
+	public function delete_investment(){
+		$this->investor_model->deleteInvestment($_POST['lastPaymentId']);
+	}
+
+
+	// public function add_investment()
+	// {
+	// 	echo "<pre>";
+	// 	print_r($_POST);
+	// 	exit();
+	// 	//for channels
+	// 	$channelArray = array();
+	// 	//for comma seprated channel id
+	// 	$commaSepratedChannelId = array();
+	// 	//filter the empty investment value
+	// 	if(isset($_POST['channels'])){
+	// 		foreach ($_POST['channels'] as $key => $value) {
+	// 			if(!empty($value)){
+	// 				$channelArray[$key] = $value; 
+	// 				$commaSepratedChannelId[] = $key;
+	// 			}
+	// 		}
+	// 	}
+	// 	//inserting the payment
+	// 	//making data for payment
+	// 	$payment_data = array(
+	// 		'created_by' => $this->session->userdata('user_id'),
+	// 		'bank' => $this->input->post('bank'),
+	// 		'total_investment' => $this->input->post('total_investment'),
+	// 	);
+	// 	$payment_id = $this->investor_model->addPayment($payment_data);
+	// 	//insert payment end
+	// 	//making data for investment and insert into loop 
+	// 	foreach ($channelArray as $channel_id => $channel_percent) {
+	// 		$channelShare = $this->investor_model->getChannelShareById($channel_id);
+	// 		$investment_data[] = array(
+	// 		'channel_id' => $channel_id,
+	// 		'payment_id' => $payment_id['data'][0]['id'],
+	// 		'amount' => $channel_percent * $channelShare,
+	// 		'percentage' => $channel_percent,
+	// 		);
+	// 	}
+	// 	//insert the investment
+	// 	$investment_result = $this->investor_model->addInvestments($investment_data);
+	// 	//making the contract data
+	// 	//making the comma seprtaed id's of channel
+	// 	$commaSepratedChannelId = implode(',', $commaSepratedChannelId);
+	// 	$i_contract_data = array(
+	// 		'channels' => $commaSepratedChannelId,
+	// 		'contract' => $this->input->post('contract'),
+	// 		'payment_id' => $payment_id['data'][0]['id'],
+	// 		'contract_id' => $this->input->post('contract_id'),
+
+	// 	);
+	// 	$i_contract_result = $this->investor_model->addContract($i_contract_data);
+	// 	$this->session->set_flashdata('message', 'investment Success');
+ //        redirect(base_url('investor/invest_now'),'refresh');
+	// }
 }

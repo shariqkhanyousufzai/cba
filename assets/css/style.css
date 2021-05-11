@@ -59,3 +59,22 @@ button#kt_aside_toggle {
     font-weight: bold;
     text-transform: capitalize;
 }
+.confirm_submit_investment{
+  display: none!important;
+}
+.paymentBtn{
+  font-size: 21px;
+    border-radius: 34px;
+    font-weight: bold!important;
+    background: #1bc5bd;
+}
+
+.paymentcards{
+  background: #ffffff54;
+    padding: 33px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 1px #00000069;
+    width: 81%;
+    margin: 0 auto;
+    margin-top: 30px!important;
+}

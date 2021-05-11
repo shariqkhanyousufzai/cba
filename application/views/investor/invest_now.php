@@ -1,4 +1,4 @@
-        
+<script src="https://www.paypal.com/sdk/js?client-id=<?=PAYPAL?>&vault=true"></script>        
 <link href="<?=$assets?>/css/investor/invest_now.css" rel="stylesheet" type="text/css" />
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Entry-->
@@ -9,7 +9,7 @@
                 
                 <div class="card-body p-0">
                     <!--begin: Wizard-->
-                    <div class="wizard wizard-5" id="kt_wizard" data-wizard-state="step-first" data-wizard-clickable="false">
+                    <div class="wizard wizard-5" id="kt_wizard" data-wizard-state="step-first" data-wizard-clickable="true">
                         <!--begin: Wizard Nav-->
                         <div class="w-lg-50 border-bottom border-bottom-lg-0 border-right-lg">
                             <div class="py-8 px-8 py-lg-20 px-lg-10">
@@ -34,6 +34,12 @@
                                         <div class="wizard-label">4</div>
                                     </div>
                                     <!--end::Wizard Step-->
+                                    <!--begin::Wizard Step-->
+                                    <div class="wizard-step" data-wizard-type="step">
+                                        <div class="wizard-label">5</div>
+                                    </div>
+                                    <!--end::Wizard Step-->
+
                                 </div>
                                 <div class="text-center py-10">
                                     <div data-wizard-type="step-info">
@@ -56,10 +62,7 @@
                                                 </div>
                                                 <div data-wizard-type="step-info">
                                                     <h3 class="font-weight-bolder mb-5">CheckOut Your Contract</h3>
-                                                    <div class="contract">
-                                                        <?=$getContract?>
-                                                    </div>
-                                                        <!-- <img src="<?=$assets?>/media/svg/illustrations/process-verify.svg" alt="image" class="mt-10 h-300px" /> -->
+                                                        <img src="<?=$assets?>/media/svg/illustrations/process-verify.svg" alt="image" class="mt-10 h-300px" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,59 +70,36 @@
                                         <!--end: Wizard Nav-->
                                         <!--begin: Wizard Body-->
                                         <div class="w-lg-50">
-                                            <div class="py-8 px-8  px-lg-20">
+                                            <div class="py-8 px-2  px-lg-2">
                                                 <!--begin: Wizard Form-->
-                                                <form method="post" action="<?=base_url('advertisement/add')?>" class="form" id="kt_form" enctype="multipart/form-data">
+                                                <form method="post" class="form" id="investmenForm" enctype="multipart/form-data">
                                                     <!--begin: Wizard Step 1-->
                                                     <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                                         <h4 class="mb-10 font-weight-bold text-dark">Check The Channel You Want To Invest</h4>
                                                         <div class="col-xl-6">
                                                             <!--begin::Input-->
                                                             <ul>
-                                                              <li>
-                                                                <input type="checkbox" id="music" />
-                                                                <label for="music" class="check"><img src="<?=$assets?>/media/1.PNG" /></label>
-                                                                <select class="form-control music" name="music" style="visibility: hidden;">
-                                                                     <option value="">-- Select Amount</option>
-                                                                    <?php
-                                                                        for($i = 0.25 ; $i<=max_investment ; $i+=0.25){
-                                                                        ?>
-                                                                        <option value="<?=$i?>"><?=$i?></option>
-                                                                        <?php   
-                                                                        }
-                                                                        ?>
-
-                                                                </select>
-                                                            </li>
+                                                              
+                                                            <?php
+                                                            foreach ($getChannels as $getChannel) {
+                                                            ?>
                                                             <li>
-                                                                <input type="checkbox" id="food" />
-                                                                <label for="food" class="check"><img src="<?=$assets?>/media/2.PNG" /></label>
-                                                                <select class="form-control food" name="food" style="visibility: hidden;">
-                                                                     <option value="">-- Select Amount</option>
-                                                                    <?php
-                                                                        for($i = 0.25 ; $i<=max_investment ; $i+=0.25){
-                                                                        ?>
-                                                                        <option value="<?=$i?>"><?=$i?></option>
-                                                                        <?php   
-                                                                        }
-                                                                        ?>
-                                                                </select>
-                                                            </li>
-                                                            <li>
-                                                                <input type="checkbox" id="sport" />
-                                                                <label for="sport" class="check"><img src="<?=$assets?>/media/3.PNG" /></label>
-                                                                <select class="form-control sport" name="sport" style="visibility: hidden;">
+                                                                <input type="checkbox" id="<?=$getChannel->name?>" />
+                                                                <label for="<?=$getChannel->name?>" class="check"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
+                                                                <select class="form-control <?=$getChannel->name?>" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>" value="<?=$getChannel->name?>" style="visibility: hidden;">
                                                                     <option value="">-- Select Amount</option>
                                                                     <?php
-                                                                        for($i = 0.25 ; $i<=max_investment ; $i+=0.25){
-                                                                        ?>
-                                                                        <option value="<?=$i?>"><?=$i?></option>
-                                                                        <?php   
-                                                                        }
-                                                                        ?>
-
+                                                                        for($i = 0 ; $i<=$getChannel->max_share ; $i+=$getChannel->min_share){
+                                                                    ?>
+                                                                    <option value="<?=$i?>"><?=$i?></option>
+                                                                    <?php   
+                                                                    }
+                                                                    ?>
                                                                 </select>
                                                             </li>
+                                                            <?php
+                                                            }
+                                                            ?>
                                                         </ul>
                                                         <!--end::Input-->
                                                     </div>
@@ -208,37 +188,31 @@
                                                     <div class="pb-5" data-wizard-type="step-content">
                                                         <!--begin::Section-->
                                                         <h4 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h4>
-                                                        <h6 class="font-weight-bolder mb-3">Current Address:</h6>
-                                                        <div class="text-dark-50 line-height-lg">
-                                                            <div>Address Line 1</div>
-                                                            <div>Address Line 2</div>
-                                                            <div>Melbourne 3000, VIC, Australia</div>
+                                                        <div class="contract">
+                                                        <?=$getContract->body?>
                                                         </div>
-                                                        <div class="separator separator-dashed my-5"></div>
+                                                        <input type="hidden" name="bank" class="bank">
+                                                        <input type="hidden" class="contract_val" name="contract" >
+                                                        <input type="hidden" class="contract_id" name="contract_id" value="<?=$getContract->id?>" >
+                                                        <input type="hidden" name="order_id" value="">
+                                                        <input type="hidden" class="total_investment" name="total_investment" >
                                                         <!--end::Section-->
+                                                    </div>
+                                                    <!--end: Wizard Step 4-->
+                                                    <!--begin: Wizard Step 4-->
+                                                    <div class="pb-5" data-wizard-type="step-content">
                                                         <!--begin::Section-->
-                                                        <h6 class="font-weight-bolder mb-3">Delivery Details:</h6>
-                                                        <div class="text-dark-50 line-height-lg">
-                                                            <div>Package: Complete Workstation (Monitor, Computer, Keyboard &amp; Mouse)</div>
-                                                            <div>Weight: 25kg</div>
-                                                            <div>Dimensions: 110cm (w) x 90cm (h) x 150cm (L)</div>
+                                                        <div align="center">
+                                                            <h4 class="mb-10 font-weight-bold text-dark">Select Your Payment</h4>
                                                         </div>
-                                                        <div class="separator separator-dashed my-5"></div>
-                                                        <!--end::Section-->
-                                                        <!--begin::Section-->
-                                                        <h6 class="font-weight-bolder mb-3">Delivery Service Type:</h6>
-                                                        <div class="text-dark-50 line-height-lg">
-                                                            <div>Overnight Delivery with Regular Packaging</div>
-                                                            <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
+                                                        <div class="save_msg"></div>
+                                                        <div class="mt-2 mb-2 paymentcards">
+                                                            <h4 class="mb-5 font-weight-bold text-dark">Direct Bank Transfer: </h4>
+                                                            <button type="button" class="paymentBtn btn font-weight-bold btn-primary form-control" data-type="Direct Bank Transfer">Bank Transfer</button>
                                                         </div>
-                                                        <div class="separator separator-dashed my-5"></div>
-                                                        <!--end::Section-->
-                                                        <!--begin::Section-->
-                                                        <h6 class="font-weight-bolder mb-3">Delivery Address:</h6>
-                                                        <div class="text-dark-50 line-height-lg">
-                                                            <div>Address Line 1</div>
-                                                            <div>Address Line 2</div>
-                                                            <div>Preston 3072, VIC, Australia</div>
+                                                        <div class="mt-2 mb-2 paymentcards">
+                                                            <h4 class="mb-5 font-weight-bold text-dark">Pay Through Paypal: </h4>
+                                                            <div class="mt-4" id="paypal-button-container"> </div>
                                                         </div>
                                                         <!--end::Section-->
                                                     </div>
@@ -260,17 +234,7 @@
                                                                 </span>Previous</button>
                                                             </div>
                                                             <div>
-                                                                <button type="button" class="btn btn-primary font-weight-bolder px-10 py-4" data-wizard-type="action-submit">Submit
-                                                                    <span class="svg-icon svg-icon-md ml-3">
-                                                                        <!--begin::Svg Icon | path:<?=$assets?>/media/svg/icons/Navigation/Check.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                                <path d="M6.26193932,17.6476484 C5.90425297,18.0684559 5.27315905,18.1196257 4.85235158,17.7619393 C4.43154411,17.404253 4.38037434,16.773159 4.73806068,16.3523516 L13.2380607,6.35235158 C13.6013618,5.92493855 14.2451015,5.87991302 14.6643638,6.25259068 L19.1643638,10.2525907 C19.5771466,10.6195087 19.6143273,11.2515811 19.2474093,11.6643638 C18.8804913,12.0771466 18.2484189,12.1143273 17.8356362,11.7474093 L14.0997854,8.42665306 L6.26193932,17.6476484 Z" fill="#000000" fill-rule="nonzero" transform="translate(11.999995, 12.000002) rotate(-180.000000) translate(-11.999995, -12.000002)" />
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span></button>
+                                                                
                                                                     <button type="button" id="next-step" class="btn btn-primary font-weight-bolder px-10 py-4" data-wizard-type="action-next">Next
                                                                         <span class="svg-icon svg-icon-md ml-3">
                                                                             <!--begin::Svg Icon | path:<?=$assets?>/media/svg/icons/Navigation/Arrow-right.svg-->
@@ -303,8 +267,9 @@
                         
 <!-- for contract purpose -->
 <script type="text/javascript">
-    var ChannelPrice = '<?=CHANNEL_PRICE?>'
-    var ChannelVat = '<?=VAT?>'
+    var ChannelPrice = '<?=CHANNEL_PRICE?>';
+    var ChannelVat = '<?=VAT?>';
+    var BASEURL = '<?=base_url()?>';
     var ReplaceArray = 
     {
         Name : '<?=$user->full_name?>',

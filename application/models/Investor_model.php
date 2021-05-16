@@ -123,6 +123,30 @@ class Investor_model extends CI_Model
 		}
 	}
 
+	public function getPayments(){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$query = '
+			SELECT c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract FROM investments AS i
+			LEFT JOIN channels c ON i.channel_id = c.id
+			LEFT JOIN payments p ON i.payment_id = p.id
+			LEFT JOIN i_contracts ic ON i.payment_id = ic.payment_id 
+			WHERE i.created_by = '.$this->session->userdata('user_id').' AND p.bank = "Direct Bank Transfer" ';
+			$q = $this->db->query($query);
+			if($q->num_rows() > 0){
+				$res["data"] = $q->result();
+				return $res;
+			}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
 	public function deleteInvestment($id){
 		//delete data from payment
 		$this->db->where('id', $id);

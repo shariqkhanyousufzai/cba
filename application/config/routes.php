@@ -83,5 +83,10 @@ $route['investor/list'] = 'investor/list';
 $route['investor/add_investment'] = 'investor/add_investment';
 //create investment
 $route['investor/invest_now'] = 'investor/invest_now';
+//get all my investment
+$route['investor/my_investment_list'] = 'investor/my_investment_list';
+//pay investment
+$route['investor/pay_investment'] = 'investor/pay_investment';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

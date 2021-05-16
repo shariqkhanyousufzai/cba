@@ -47,6 +47,19 @@ class Investor extends CI_Controller {
 		$this->page_construct('investor/invest_now',$data);
 	}
 
+	public function my_investment_list()
+	{
+		$data['getPayments']['data'] = $this->investor_model->getPayments();
+		$this->page_construct('investor/my_investment_list',$data);
+	}
+
+
+	public function pay_investment()
+	{
+		$data['getPayments']['data'] = $this->investor_model->getPayments();
+		$this->page_construct('investor/pay_investment',$data);
+	}
+
 	
 	public function add_investment()
 	{
@@ -68,6 +81,7 @@ class Investor extends CI_Controller {
 		$payment_data = array(
 			'created_by' => $this->session->userdata('user_id'),
 			'total_investment' => $this->input->post('total_investment'),
+			'created_by' => $this->session->userdata('user_id')
 		);
 		$payment_id = $this->investor_model->addPayment($payment_data);
 		//insert payment end
@@ -79,6 +93,7 @@ class Investor extends CI_Controller {
 			'payment_id' => $payment_id['data'][0]['id'],
 			'amount' => $channel_percent * $channelShare,
 			'percentage' => $channel_percent,
+			'created_by' => $this->session->userdata('user_id')
 			);
 		}
 		//insert the investment
@@ -91,6 +106,7 @@ class Investor extends CI_Controller {
 			'contract' => $this->input->post('contract'),
 			'payment_id' => $payment_id['data'][0]['id'],
 			'contract_id' => $this->input->post('contract_id'),
+			'created_by' => $this->session->userdata('user_id')
 
 		);
 		$i_contract_result = $this->investor_model->addContract($i_contract_data);

@@ -53,12 +53,37 @@ class Investor extends CI_Controller {
 		$this->page_construct('investor/my_investment_list',$data);
 	}
 
+	public function all_investment_list()
+	{
+		$data['getAllPayments']['data'] = $this->investor_model->getAllPayments();
+		$this->page_construct('investor/all_investment_list',$data);
+	}
+
+	public function getmsg()
+	{
+		$res = $this->investor_model->getAllMsgs($this->input->post('getTheId'));
+		echo json_encode($res);
+	}
+
 
 	public function pay_investment()
 	{
 		$data['getPayments']['data'] = $this->investor_model->getPayments();
 		$this->page_construct('investor/pay_investment',$data);
 	}
+
+	public function approve_investment($id){
+		if($this->session->userdata('level') == 1){
+			if($this->investor_model->updatePaymentStatus($id)){
+			$this->session->set_flashdata('message', 'Payment Updated Success');
+			}else{
+				$this->session->set_flashdata('message', 'Payment Updated Failed');
+			}
+			redirect('investor/investments','refresh');
+		}
+	}
+
+	
 
 	
 	public function add_investment()
@@ -121,6 +146,16 @@ class Investor extends CI_Controller {
 
 	public function delete_investment(){
 		$this->investor_model->deleteInvestment($_POST['lastPaymentId']);
+	}
+
+	public function sendmsg(){
+		$data = array(
+			'investment_id' => $this->input->post('getTheId'),
+			'comment' => $this->input->post('getTheMsg'),
+			'created_by' => $this->session->userdata('user_id')
+		);
+		$res = $this->investor_model->insertComment($data);
+		echo json_encode($res);
 	}
 
 

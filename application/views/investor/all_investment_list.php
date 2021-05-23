@@ -37,7 +37,7 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($getPayments['data']['data'] as $getPayment) {
+                            foreach ($getAllPayments['data']['data'] as $getPayment) {
                             ?> 
                             <tr>
                                 <td><?= $i ?></td>
@@ -47,14 +47,14 @@
                                 <td><span class="badge badge-warning"> Pending </span></td>
                                 <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('investor/pay_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon" title="Pay Now">
+                                    <a href="<?php echo base_url('investor/approve_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon" title="Approve Now">
                                         <span class="svg-icon svg-icon-md">
-                                            <i class="fab la-amazon-pay"></i>
+                                            <i class="fas fa-check-circle"></i>
                                         </span>
                                     </a>
-                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Send Message">
+                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon get_msg" title="Send Message">
                                         <span class="svg-icon svg-icon-md">
-                                            <i class="fas fa-envelope"></i>
+                                            <i class="fas fa-envelope-open-text"></i>
                                         </span>
                                     </a>
                                 </td>
@@ -80,18 +80,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Type Your Message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">All Messages</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="investment_id" class="investment_id">
-                <textarea class="messagetext" style="width: 100%"></textarea>
+                <table class="table">
+                    <thead align="center">
+                        <th>s.no</th>
+                        <th>Comments</th>
+                        <th>Created</th>
+                    </thead>
+                    <tbody class="comments" align="center">
+                        
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-dark font-weight-bold sendnow">Send</button>
             </div>
         </div>
     </div>
@@ -105,29 +112,37 @@
 <script type="text/javascript">
     $(document).ready(function() {
     $('#example').DataTable();
-    $(document).on('click','.send_msg',function(){
+    $(document).on('click','.get_msg',function(){
         var getTheId = $(this).data('id');
-        $('.investment_id').val(getTheId);
-        $('#msgmodal').modal('show');
-    });
-    $(document).on('click','.sendnow',function(){
-        var getTheId = $('.investment_id').val();
-        var getTheMsg = $('.messagetext').val();
         $.ajax({
-              url:"<?=base_url('investor/sendmsg')?>",
+              url:"<?=base_url('investor/getmsg')?>",
               method: 'post',
               data: {
                 getTheId : getTheId,
-                getTheMsg : getTheMsg
             },
             dataType: "json",
             success: function( response ) {
-                console.log(response);
-                Swal.fire('Message has been Send!');
-                $('#msgmodal').modal('hide');
+                var data = response.data;
+                if(data != ''){
+                   var HTML = `<tr>`;
+                    for(i in data){
+                        HTML += `
+                                <td>${parseInt(i) + 1}</td>
+                                <td>${data[i].comment}</td>
+                                <td>${data[i].created_on}</td>
+                                `
+                    }
+                    HTML += `</tr>`;
+                    $('.comments').html(HTML); 
+                }else{
+                     $('.comments').html('<tr><td></td><td>No data found</td><td></td></tr>'); 
+                }
+                
+                $('#msgmodal').modal('show');
+
+                console.log(response.data);
             }
         })
-
     });
     });
 </script>

@@ -5,6 +5,7 @@ class Stripe_model extends CI_Model
 {
 	function updatePayment($id){
 		$this->db->set('bank','Stripe');
+		$this->db->set('status',1);
 		$this->db->where('id',$id);
 		if($this->db->update('payments')){
 			return true;

@@ -85,10 +85,17 @@ $route['investor/add_investment'] = 'investor/add_investment';
 $route['investor/invest_now'] = 'investor/invest_now';
 //get all my investment
 $route['investor/my_investment_list'] = 'investor/my_investment_list';
+//get all investment for admin
+$route['investor/investments'] = 'investor/all_investment_list';
 //pay investment
 $route['investor/pay_investment'] = 'investor/pay_investment';
 //stripe pay
 $route['stripe/success/(:num)'] = 'payments/stripe/update_payment/$1';
-
+// send mssage
+$route['investor/sendmsg'] = 'investor/sendmsg';
+// get msg
+$route['investor/getmsg'] = 'investor/getmsg';
+// approve payment
+$route['investor/approve_investment/(:num)'] = 'investor/approve_investment/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

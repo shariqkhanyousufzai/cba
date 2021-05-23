@@ -101,6 +101,24 @@ class Investor_model extends CI_Model
 		}
 	}
 
+	public function insertComment($data){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			if($this->db->insert('comments', $data)){
+				$data['id'] = $this->db->insert_id();
+				$res["data"][] = $data;
+				return $res;
+		}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
 	public function updatePayment($lastPaymentId,$getPaymentMethod){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
@@ -123,20 +141,112 @@ class Investor_model extends CI_Model
 		}
 	}
 
+	public function updatePaymentStatus($id){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$this->db->set('status',1);
+			$this->db->where('id',$id);
+			if($this->db->update('payments')){
+				$data['id'] = $id;
+				return $res;
+		}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+	// public function getPayments(){
+	// 	$res = [
+	// 		"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+	// 	try
+	// 	{
+	// 		$query = '
+	// 		SELECT c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract FROM investments AS i
+	// 		LEFT JOIN channels c ON i.channel_id = c.id
+	// 		LEFT JOIN payments p ON i.payment_id = p.id
+	// 		LEFT JOIN i_contracts ic ON i.payment_id = ic.payment_id 
+	// 		WHERE i.created_by = '.$this->session->userdata('user_id').' AND p.bank = "Direct Bank Transfer" ';
+	// 		$q = $this->db->query($query);
+	// 		if($q->num_rows() > 0){
+	// 			$res["data"] = $q->result();
+	// 			return $res;
+	// 		}
+	// 	}catch(\Exception $e)
+	// 	{
+	// 		$res["msg"] = "failed";
+	// 		$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+	// 		return $res;
+	// 	}
+	// }
+
 	public function getPayments(){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$query = '
-			SELECT c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract FROM investments AS i
-			LEFT JOIN channels c ON i.channel_id = c.id
-			LEFT JOIN payments p ON i.payment_id = p.id
-			LEFT JOIN i_contracts ic ON i.payment_id = ic.payment_id 
-			WHERE i.created_by = '.$this->session->userdata('user_id').' AND p.bank = "Direct Bank Transfer" ';
-			$q = $this->db->query($query);
+			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract');
+			$this->db->from('investments i');
+			$this->db->join('channels c','i.channel_id = c.id','LEFT');
+			$this->db->join('payments p','i.payment_id = p.id','LEFT');
+			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
+			$this->db->where('p.bank','Direct Bank Transfer');
+			$this->db->where('i.created_by',$this->session->userdata('user_id'));
+			$this->db->where('p.status',0);
+			$q = $this->db->get();
 			if($q->num_rows() > 0){
 				$res["data"] = $q->result();
+				return $res;
+			}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+	public function getAllPayments(){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract');
+			$this->db->from('investments i');
+			$this->db->join('channels c','i.channel_id = c.id','LEFT');
+			$this->db->join('payments p','i.payment_id = p.id','LEFT');
+			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
+			$this->db->where('p.bank','Direct Bank Transfer');
+			$this->db->where('p.status',0);
+			$q = $this->db->get();
+			if($q->num_rows() > 0){
+				$res["data"] = $q->result();
+				return $res;
+			}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+	public function getAllMsgs($id){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$this->db->where('investment_id',$id);
+			$q = $this->db->get('comments');
+			if($q->num_rows() > 0){
+				$res["data"] = $q->result();
+				return $res;
+			}else{
+				$res["data"] = false;
 				return $res;
 			}
 		}catch(\Exception $e)

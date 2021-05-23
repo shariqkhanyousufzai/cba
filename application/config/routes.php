@@ -87,6 +87,8 @@ $route['investor/invest_now'] = 'investor/invest_now';
 $route['investor/my_investment_list'] = 'investor/my_investment_list';
 //pay investment
 $route['investor/pay_investment'] = 'investor/pay_investment';
+//stripe pay
+$route['stripe/success/(:num)'] = 'payments/stripe/update_payment/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

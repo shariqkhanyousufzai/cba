@@ -472,3 +472,40 @@ $(document).ready(function(){
  }).render('#paypal-button-container');
  // PAYPAL BUTTON END
 });
+
+
+$(document).ready(function(){
+	//stripe sca
+// Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+    	var fd = new FormData();
+		fd.append('total', $('.total_investment').val());
+		fd.append('payment_id', lastPaymentId);
+		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId);
+		fd.append('cancel_url', BASEURL);
+	      fetch(BASEURL+"/stripesca/create-checkout-session.php", {
+	        method: "POST",
+	        body : fd
+	      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+})

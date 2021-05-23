@@ -78,3 +78,13 @@ button#kt_aside_toggle {
     margin: 0 auto;
     margin-top: 30px!important;
 }
+
+.stripebtn{
+        font-size: 21px;
+    border-radius: 34px;
+    font-weight: bold!important;
+    background: #000;
+    color: #fff;
+    padding: 8px 20px;
+    width: 100%;
+}

@@ -22,6 +22,7 @@ class Dashboard extends CI_Controller {
 	function __construct()
     {
         parent::__construct();
+        $this->load->model('dashboard_model');
         if (!$this->ion_auth->logged_in())
 			{            
 			$this->session->set_userdata('requested_page', $this->uri->uri_string());
@@ -31,6 +32,28 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$this->page_construct('dashboard');
+		$data_channels = [];
+		$investChannels = [];
+		
+		//music , food, sports
+		$channels = ['UChE0y4mY1TEsmY0EMKvgFiA','UC5OXEAL2wW7ccJu3gEZnl0w','UCtai6tFt8TcMXTB--lLQ-dQ'];
+		$apiKey = 'AIzaSyDSCTumwugVv1cDtipEfGKYYeJ0ps8C6OE';
+
+		foreach ($channels as $key ) {
+			$channelId = $key;
+			if($key == 'UChE0y4mY1TEsmY0EMKvgFiA'){
+				$channel_name = 'music';
+			}else if($key == 'UC5OXEAL2wW7ccJu3gEZnl0w'){
+				$channel_name = 'food';
+			}else if($key == 'UCtai6tFt8TcMXTB--lLQ-dQ'){
+				$channel_name = 'sport';
+			}
+			$json = json_decode((file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='.$channelId.'&key='.$apiKey)), true);
+			$data_channels[$channel_name]['views'] = $json['items'][0]['statistics']['viewCount'];
+			$data_channels[$channel_name]['subscriber'] = $json['items'][0]['statistics']['subscriberCount'];
+
+		}
+		$this->data['data_channels'] = $data_channels;	
+		$this->page_construct('dashboard',$this->data);
 	}
 }

@@ -53,6 +53,10 @@ class Dashboard extends CI_Controller {
 			$data_channels[$channel_name]['subscriber'] = $json['items'][0]['statistics']['subscriberCount'];
 
 		}
+
+		$this->data['overall_investment'] = $this->dashboard_model->overallInvestment();
+		$this->data['pending_investment'] = $this->dashboard_model->pendingInvestment();
+		$this->data['completed_investment'] = $this->dashboard_model->completedInvestment();
 		$this->data['data_channels'] = $data_channels;	
 		$this->page_construct('dashboard',$this->data);
 	}

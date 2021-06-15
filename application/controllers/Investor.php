@@ -47,15 +47,23 @@ class Investor extends CI_Controller {
 		$this->page_construct('investor/invest_now',$data);
 	}
 
-	public function my_investment_list()
+	public function investor_profile($id){
+		$data['getAllUserData'] = $this->investor_model->getAllUserData($id);
+		$data['getPayments']['data'] = $this->investor_model->getPayments($type = NULL,$id);
+ 		$this->page_construct('investor/investor_profile',$data);
+	}
+
+	public function my_investment_list($type = null)
 	{
-		$data['getPayments']['data'] = $this->investor_model->getPayments();
+		$type = (isset($_GET['status'])) ? $_GET['status'] : 'all';
+		$data['getPayments']['data'] = $this->investor_model->getPayments($type);
 		$this->page_construct('investor/my_investment_list',$data);
 	}
 
-	public function all_investment_list()
+	public function all_investment_list($type = null)
 	{
-		$data['getAllPayments']['data'] = $this->investor_model->getAllPayments();
+		$type = (isset($_GET['status'])) ? $_GET['status'] : 'all';
+		$data['getAllPayments']['data'] = $this->investor_model->getAllPayments($type);
 		$this->page_construct('investor/all_investment_list',$data);
 	}
 

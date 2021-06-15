@@ -151,7 +151,7 @@
 <span class="menu-text">Contract</span>
 </a>
 </li>
-<li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'list' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
+<li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'investor_profile' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
 <a href="<?php echo base_url('investor/list'); ?>" class="menu-link">
 <span class="svg-icon menu-icon">
 <!--begin::Svg Icon | path:<?=$assets?>/media/svg/icons/Design/Layers.svg-->

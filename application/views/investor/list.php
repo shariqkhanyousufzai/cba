@@ -47,7 +47,7 @@
                                 <td><?= $investor->country ?></td>
                                 <td><?= $investor->created_date ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('investor/view/'.$investor->id); ?>" class="btn btn-sm btn-clean btn-icon" title="View Customer">
+                                    <a href="<?php echo base_url('investor/investor_profile/'.$investor->id); ?>" class="btn btn-sm btn-clean btn-icon" title="View Customer">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="ki ki-eye"></i>
                                         </span>

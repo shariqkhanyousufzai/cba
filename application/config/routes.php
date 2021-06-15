@@ -97,5 +97,7 @@ $route['investor/sendmsg'] = 'investor/sendmsg';
 $route['investor/getmsg'] = 'investor/getmsg';
 // approve payment
 $route['investor/approve_investment/(:num)'] = 'investor/approve_investment/$1';
+//investor view
+$route['investor/investor_profile/(:num)'] = 'investor/investor_profile/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

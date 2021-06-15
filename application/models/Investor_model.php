@@ -184,19 +184,29 @@ class Investor_model extends CI_Model
 	// 	}
 	// }
 
-	public function getPayments(){
+	public function getPayments($type = NULL,$id = NULL){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract');
+			$this->db->select('c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status');
 			$this->db->from('investments i');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');
 			$this->db->join('payments p','i.payment_id = p.id','LEFT');
 			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
+			$this->db->where('p.bank is not null');
+			if($type == 'pending'){
 			$this->db->where('p.bank','Direct Bank Transfer');
+			$this->db->where('p.status',0);	
+			}else if($type == 'completed'){
+			$this->db->where('p.bank is not null');
+			$this->db->where('p.status',1);	
+			}
+			if(isset($id)){
+			$this->db->where('i.created_by',$id);
+			}else{
 			$this->db->where('i.created_by',$this->session->userdata('user_id'));
-			$this->db->where('p.status',0);
+			}
 			$q = $this->db->get();
 			if($q->num_rows() > 0){
 				$res["data"] = $q->result();
@@ -210,18 +220,24 @@ class Investor_model extends CI_Model
 		}
 	}
 
-	public function getAllPayments(){
+	public function getAllPayments($type){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract');
+			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status');
 			$this->db->from('investments i');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');
 			$this->db->join('payments p','i.payment_id = p.id','LEFT');
 			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
+			$this->db->where('p.bank is not null');
+			if($type == 'pending'){
 			$this->db->where('p.bank','Direct Bank Transfer');
-			$this->db->where('p.status',0);
+			$this->db->where('p.status',0);	
+			}else if($type == 'completed'){
+			$this->db->where('p.bank is not null');
+			$this->db->where('p.status',1);	
+			}
 			$q = $this->db->get();
 			if($q->num_rows() > 0){
 				$res["data"] = $q->result();
@@ -242,6 +258,28 @@ class Investor_model extends CI_Model
 		{
 			$this->db->where('investment_id',$id);
 			$q = $this->db->get('comments');
+			if($q->num_rows() > 0){
+				$res["data"] = $q->result();
+				return $res;
+			}else{
+				$res["data"] = false;
+				return $res;
+			}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+	public function getAllUserData($id){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$this->db->where('id',$id);
+			$q = $this->db->get('users');
 			if($q->num_rows() > 0){
 				$res["data"] = $q->result();
 				return $res;

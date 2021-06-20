@@ -84,6 +84,23 @@ if ( ! function_exists('group_description_name'))
     }
 // get description of group name end
 
+//check my wallet
+// get description of group name
+if ( ! function_exists('wallet'))
+    {
+        function wallet()
+        {
+            $CI =& get_instance();
+            $CI->db->where('user_id',$CI->session->userdata('user_id'));
+            $query = $CI->db->get('wallet');
+            if($query->num_rows() > 0){
+            return $query->result()[0]->amount;
+
+            }
+            return 0;
+        }
+    }
+//check my wallet
 
 
 if ( ! function_exists('group_description_name_by_name'))

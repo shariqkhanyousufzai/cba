@@ -88,6 +88,7 @@ define('max_investment', 10);
 define('DEFAULT_CONTRACT', 'english');
 define('CHANNEL_PRICE', 1000);
 define('VAT', 20);
+define('SIGNUP_AMOUNT', 5);
 //PAYPAL SANDBOX
 define('PAYPAL','AXC7NvSaRl5K_gfAxnHITRQu3B3nDOM7m664B0l2dF_Me42GCgON428RhHIf7uUfEali0zDhgkr7-gw3'); //PAYPAL SANDBOX END
 // define('PAYPAL','Ad6iIWR0duwAJ9eb4jdDtsLiQWwVHhC-QUwZ5dCR32KQ0EZHhbGsQ01tA1271hof1K0I5vpvau_Tp9XJ'); //PAYPAL LIVE

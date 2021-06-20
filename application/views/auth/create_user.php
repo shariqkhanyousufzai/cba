@@ -72,51 +72,35 @@ error_reporting(0);
                 <!--begin::Title-->
                 <!--begin::Form group-->
                 <div class="row mt-2">
-                  <div class="col-sm-12">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Full Name</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="full_name" autocomplete="off" placeholder="Full Name" />
+                  <div class="col-sm-6">
+                    <label class="font-size-h6 font-weight-bolder text-dark">First Name <span class="text-danger">*</span></label>
+                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="first_name" autocomplete="off" placeholder="First Name" />
                   </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-sm-12">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Address</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="address" autocomplete="off" placeholder="Address" />
-                  </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-sm-4">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Zip Code</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="zip_code" autocomplete="off" placeholder="Zip" />
-                  </div>
-                  <div class="col-sm-4">
-                    <label class="font-size-h6 font-weight-bolder text-dark">City</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="city" autocomplete="off" placeholder="City" />
-                  </div>
-                  <div class="col-sm-4">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Country</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="country" autocomplete="off" placeholder="Country" />
+                  <div class="col-sm-6">
+                    <label class="font-size-h6 font-weight-bolder text-dark">Last Name <span class="text-danger">*</span></label>
+                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="last_name" autocomplete="off" placeholder="Last Name" />
                   </div>
                 </div>
                 <div class="row mt-3">
                   <div class="col-sm-6">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+                    <label class="font-size-h6 font-weight-bolder text-dark">Email <span class="text-danger">*</span></label>
                     <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="email" name="email" autocomplete="off" placeholder="Email" />
                   </div>
                   <div class="col-sm-6">
-                    <label class="font-size-h6 font-weight-bolder text-dark">Phone</label>
-                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="phone" autocomplete="off" placeholder="Phone" />
+                    <label class="font-size-h6 font-weight-bolder text-dark">Code</label>
+                    <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="text" name="code" autocomplete="off" placeholder="Code" />
                   </div>
                 </div>
                 <div class="row mt-3 mb-5">
                   <div class="col-sm-6">
                     <div class="d-flex justify-content-between mt-n5">
-                      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+                      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password <span class="text-danger">*</span></label>
                     </div>
                     <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="password" name="password" autocomplete="off" />
                   </div>
                   <div class="col-sm-6">
                     <div class="d-flex justify-content-between mt-n5">
-                      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Confirm Password</label>
+                      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Confirm Password <span class="text-danger">*</span></label>
                     </div>
                     <input class="form-control form-control-solid h-auto p-6 rounded-lg" type="password" name="password_confirm" autocomplete="off" />
                   </div>
@@ -127,7 +111,7 @@ error_reporting(0);
                   Have An Account? <a href="<?=base_url('/')?>">Login</a>
                 </div>
                 <div class="pb-lg-0 pb-5" align="right">
-                  <button type="submit"  class="themebtn btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign Up</button>
+                  <button type="submit"  class="themebtn btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Next</button>
                 </div>
                 <!--end::Action-->
               </form>
@@ -173,7 +157,7 @@ error_reporting(0);
           ?>
 
           Swal.fire({
-            html: '<?=$message?>',
+            html: `<?=trim($message)?>`,
           })
           <?php
         }

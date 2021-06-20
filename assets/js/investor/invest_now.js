@@ -73,7 +73,8 @@ var investmenForm = function () {
 			}
 			$('.total_investment').val(PriceTot);
 			ChannelReplace += '</ol>';
-			if(wizard.getStep() == 4){
+			console.log(ChannelReplace);
+			if(wizard.getStep() == 2){
 				var getContract = $('.contract').html();
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
@@ -93,7 +94,7 @@ var investmenForm = function () {
 				$('.contract').html(replaced);
 			}
 
-			if(deleteStep > 4){
+			if(deleteStep > 2){
 				$.ajax({
 			          url:BASEURL+"investor/delete_investment",
 			          method: 'post',
@@ -108,7 +109,7 @@ var investmenForm = function () {
 				deleteStep = 0;
 			}
 
-			if(wizard.getStep() == 5){
+			if(wizard.getStep() == 3){
 				deleteStep = wizard.getStep();
 				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
@@ -388,14 +389,23 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).on('change','select',function(){
+	$(document).on('keyup','.channel_invest',function(e){
+		if(e.keyCode == 8){
+			 $('.'+getChannel+'_invest').html(); 
+		}
 	    var getChannel = $(this).attr('data-name');
 	    console.log('.'+getChannel+'_invest');
 	    $('.'+getChannel+'_invest').html($(this).val()); 
 		chanelArray[getChannel] = $(this).val();
+		console.log(chanelArray);
 	});
 
 	
+	$(document).on('click','.termsclick',function(e){
+		$('.contract').show();
+	});
+
+
 	$(document).on('click','.paymentBtn',function(e){
 		e.preventDefault();
 		var getPaymentMethod = $(this).data('type');

@@ -58,7 +58,59 @@ class Auth extends CI_Controller
 			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
 		}
 	}
+	// direct login
+	public function direct_login($email,$password)
+	{
+		$this->data['title'] = $this->lang->line('login_heading');
 
+		// validate form input
+		$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')));
+		$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')));
+
+		if (!empty($email) && !empty($password))
+		{
+			// check to see if the user is logging in
+			// check for "remember me"
+			$remember = (bool)$this->input->post('remember');
+
+			if ($this->ion_auth->login($email, $password, $remember))
+			{
+				//if the login is successful
+				//redirect them back to the home page
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				redirect('/dashboard', 'refresh');
+			}
+			else
+			{
+				// if the login was un-successful
+				// redirect them back to the login page
+				$this->session->set_flashdata('message', $this->ion_auth->errors());
+				redirect('/', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+			}
+		}
+		else
+		{
+			// the user is not logging in so display the login page
+			// set the flash data error message if there is one
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+			$this->data['identity'] = [
+				'name' => 'identity',
+				'id' => 'identity',
+				'type' => 'text',
+				'value' => $this->form_validation->set_value('identity'),
+			];
+
+			$this->data['password'] = [
+				'name' => 'password',
+				'id' => 'password',
+				'type' => 'password',
+			];
+
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'login', $this->data);
+		}
+	}
+	// direct login end
 	/**
 	 * Log the user in
 	 */
@@ -468,7 +520,7 @@ class Auth extends CI_Controller
 		$this->data['identity_column'] = $identity_column;
 
 		// validate form input
-		$this->form_validation->set_rules('full_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
+		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
 		if ($identity_column !== 'email')
 		{
 			$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
@@ -490,22 +542,22 @@ class Auth extends CI_Controller
 			$password = $this->input->post('password');
 
 			$additional_data = [
-				'full_name' => $this->input->post('full_name'),
+				'full_name' => $this->input->post('first_name').' '.$this->input->post('last_name'),
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'code' => $this->input->post('code'),
 				'company' => $this->input->post('company'),
-				'phone' => $this->input->post('phone'),
-				'address' => $this->input->post('address'),
-				'zip_code' => $this->input->post('zip_code'),
-				'city' => $this->input->post('city'),
-				'country' => $this->input->post('country'),
 				'group_name' => 'investor',
 			];
 		}
-		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data))
+		if ($this->form_validation->run() === TRUE && $lastId =  $this->ion_auth->register($identity, $password, $email, $additional_data))
 		{
+			$this->checkValidCode($this->input->post('code'),$lastId);
+			$this->direct_login($identity,$password);
 			// check to see if we are creating the user
-			// redirect them back to the admin page
-			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect(base_url('/'), 'refresh');
+			// redirect them back to the admin page 
+			// $this->session->set_flashdata('message', $this->ion_auth->messages());
+			// redirect(base_url('/'), 'refresh');
 		}
 		else
 		{
@@ -563,6 +615,23 @@ class Auth extends CI_Controller
 			];
 
 			$this->_render_page('auth/create_user', $this->data);		}
+	}
+
+	public function checkValidCode($code,$lastId){
+		$this->db->where('code',$code);
+		$this->db->where('is_deleted',0);
+		$this->db->where('status',0);
+		$q = $this->db->get('promo');
+		if($q->num_rows() > 0){
+			$data = array(
+				'user_id' => $lastId,
+				'code' => $code,
+				'amount' => SIGNUP_AMOUNT,
+			);
+			$this->db->insert('wallet',$data);
+			return true;
+		}
+		return false;
 	}
 	/**
 	* Redirect a user checking if is admin

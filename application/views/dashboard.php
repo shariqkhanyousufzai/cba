@@ -45,7 +45,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 						<!--begin::Body-->
 						<div class="card-body d-flex align-items-center justify-content-between pt-2 flex-wrap">
 							<!--begin::label-->
-							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?=$overall_investment['data'][0]->overall_investment?></span>
+							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?= (!empty($overall_investment['data'][0]->overall_investment)) ? $overall_investment['data'][0]->overall_investment : 0?></span>
 							<!--end::label-->
 						</div>
 						<!--end::Body-->
@@ -66,7 +66,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 						<!--begin::Body-->
 						<div class="card-body d-flex align-items-center justify-content-between pt-2 flex-wrap">
 							<!--begin::label-->
-							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?=$pending_investment['data'][0]->overall_investment?></span>
+							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?=(!empty($pending_investment['data'][0]->overall_investment)) ? $pending_investment['data'][0]->overall_investment : 0?></span>
 							<!--end::label-->
 						</div>
 						<!--end::Body-->
@@ -87,7 +87,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 						<!--begin::Body-->
 						<div class="card-body d-flex align-items-center justify-content-between pt-2 flex-wrap">
 							<!--begin::label-->
-							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?=$completed_investment['data'][0]->overall_investment?></span>
+							<span class="font-weight-bolder display5 text-dark-75 pl-5 pr-2"><?=(!empty($completed_investment['data'][0]->overall_investment)) ? $completed_investment['data'][0]->overall_investment : 0 ?></span>
 							<!--end::label-->
 						</div>
 						<!--end::Body-->

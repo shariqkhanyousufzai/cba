@@ -23,23 +23,17 @@
                                 </div>
                                 <!--end::Wizard Step-->
                                 <!--begin::Wizard Step-->
+                                <!--end::Wizard Step-->
+                                <!--begin::Wizard Step-->
                                 <div class="wizard-step" data-wizard-type="step">
                                     <div class="wizard-label">2</div>
                                 </div>
                                 <!--end::Wizard Step-->
                                 <!--begin::Wizard Step-->
+                                <!--end::Wizard Step-->
+                                <!--begin::Wizard Step-->
                                 <div class="wizard-step" data-wizard-type="step">
                                     <div class="wizard-label">3</div>
-                                </div>
-                                <!--end::Wizard Step-->
-                                <!--begin::Wizard Step-->
-                                <div class="wizard-step" data-wizard-type="step">
-                                    <div class="wizard-label">4</div>
-                                </div>
-                                <!--end::Wizard Step-->
-                                <!--begin::Wizard Step-->
-                                <div class="wizard-step" data-wizard-type="step">
-                                    <div class="wizard-label">5</div>
                                 </div>
                                 <!--end::Wizard Step-->
 
@@ -58,17 +52,8 @@
                                                     ?>
                                                     <div class="col-sm-4">
                                                         <input type="checkbox" id="<?=$getChannel->name?>" />
-                                                        <label for="<?=$getChannel->name?>" class="check"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
-                                                        <select class="form-control <?=$getChannel->name?>" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>" value="<?=$getChannel->name?>" style="visibility: hidden;">
-                                                            <option value="">-- Select Amount</option>
-                                                            <?php
-                                                            for($i = 0 ; $i<=$getChannel->max_share ; $i+=$getChannel->min_share){
-                                                                ?>
-                                                                <option value="<?=$i?>"><?=$i?></option>
-                                                                <?php   
-                                                            }
-                                                            ?>
-                                                        </select>
+                                                        <label style="text-align: center;" for="<?=$getChannel->name?>" class="check"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
+                                                        <input type="number" class="form-control <?=$getChannel->name?> channel_invest" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>"  />
                                                     </div>
                                                     <?php
                                                 }
@@ -77,106 +62,75 @@
                                             <!--end::Input-->
                                         </div>
                                     </div>
-                                    <!--end: Wizard Step 1-->
-                                    <!--begin: Wizard Step 2-->
-                                    <div class="pb-5" data-wizard-type="step-content">
-                                        <h4 class="mb-10 font-weight-bold text-dark" align="center">Investor Details</h4>
-                                        <div class="row">
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>Full Name : <strong><?=$user->full_name?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>Address : <strong><?=$user->address?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>City : <strong><?=$user->city?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>Country : <strong><?=$user->country?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>Email : <strong><?=$user->email?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-sm-4 mt-2">
-                                                <!--begin::Input-->
-                                                <label>Phone : <strong><?=$user->phone?></strong></label>
-                                                <!--end::Input-->
-                                            </div>
-                                        </div>
-
-                                    </div>
                                     <!--end: Wizard Step 2-->
                                     <!--begin: Wizard Step 3-->
                                     <div class="pb-5" data-wizard-type="step-content">
                                         <h4 class="mb-10 font-weight-bold text-dark" align="center">Channel Details</h4>
                                         <!--begin::Select-->
-                                        <div class="col-sm-4">
-                                            <div class="music" style="display: none;">
-                                                <img class="detailsimg" src="<?=$assets?>/media/1.PNG" />
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="music" style="display: none;">
+                                                    <img class="detailsimg" src="<?=$assets?>/media/1.PNG" />
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <label>Channel Name: <b>Music</b></label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                           <label>Invested: <b class="music_invest"></b></label>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-4">
+                                               <div class="food" style="display: none;">
+                                                <img class="detailsimg" src="<?=$assets?>/media/2.PNG" />
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Channel Name: <b>Music</b></label>
+                                                        <label>Channel Name: <b>Food</b></label>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                     <label>Invested: <b class="music_invest"></b></label>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="col-sm-4">
-                                         <div class="food" style="display: none;">
-                                            <img class="detailsimg" src="<?=$assets?>/media/2.PNG" />
+                                                       <label>Invested: <b class="food_invest"></b></label>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="col-sm-4">
+                                           <div class="sport" style="display: none;">
+                                            <img class="detailsimg" src="<?=$assets?>/media/3.PNG" />
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <label>Channel Name: <b>Food</b></label>
+                                                    <label>Channel Name: <b>Sport</b></label>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                 <label>Invested: <b class="food_invest"></b></label>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="col-sm-4">
-                                     <div class="sport" style="display: none;">
-                                        <img class="detailsimg" src="<?=$assets?>/media/3.PNG" />
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Channel Name: <b>Sport</b></label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                             <label>Invested: <b class="sport_invest"></b></label>
-                                         </div>
-                                     </div>
+                                                   <label>Invested: <b class="sport_invest"></b></label>
+                                               </div>
+                                           </div>
 
-                                 </div>
-                             </div>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="row">
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The <span class="termsclick">Terms and Conditions</span></label>
+                                     <!--begin::Section-->
+                                     <div class="contract" style="display: none;">
+                                     <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
+                                        <?=$getContract->body?>
+                                    </div>
+                                    <input type="hidden" name="bank" class="bank">
+                                    <input type="hidden" class="contract_val" name="contract" >
+                                    <input type="hidden" class="contract_id" name="contract_id" value="<?=$getContract->id?>" >
+                                    <input type="hidden" name="order_id" value="">
+                                    <input type="hidden" class="total_investment" name="total_investment" >
+                                    <!--end::Section-->
+
+
+                                </div>
+                            </div>
                              <!--end::Select-->
                          </div>
                          <!--end: Wizard Step 3-->
-                         <!--begin: Wizard Step 4-->
-                         <div class="pb-5" data-wizard-type="step-content">
-                            <!--begin::Section-->
-                            <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
-                            <div class="contract">
-                                <?=$getContract->body?>
-                            </div>
-                            <input type="hidden" name="bank" class="bank">
-                            <input type="hidden" class="contract_val" name="contract" >
-                            <input type="hidden" class="contract_id" name="contract_id" value="<?=$getContract->id?>" >
-                            <input type="hidden" name="order_id" value="">
-                            <input type="hidden" class="total_investment" name="total_investment" >
-                            <!--end::Section-->
-                        </div>
+                         
                         <!--end: Wizard Step 4-->
                         <!--begin: Wizard Step 4-->
                         <div class="pb-5" data-wizard-type="step-content">

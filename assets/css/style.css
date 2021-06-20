@@ -88,3 +88,32 @@ button#kt_aside_toggle {
     padding: 8px 20px;
     width: 100%;
 }
+.actionsbtn{
+    display: inline-block!important;
+    float: left!important;
+    width: 46%!important;
+    line-height: 34px;
+}
+
+.termconditions :checked + label {
+    border: none!important;
+}
+
+.termconditions:before {
+    display: none!important;
+}
+
+label.termconditions {
+    width: 90%!important;
+    display: inline-block!important;
+}
+
+input.termconditionscheck {
+    height: 22px;
+    width: 25px;
+    position: relative;
+    top: 8px;
+}
+.termsclick{
+    color: #0075ff;
+}

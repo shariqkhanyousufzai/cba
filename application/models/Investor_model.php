@@ -225,10 +225,12 @@ class Investor_model extends CI_Model
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status');
+			$this->db->select('
+				u.full_name,c.name,i.amount,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status');
 			$this->db->from('investments i');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');
 			$this->db->join('payments p','i.payment_id = p.id','LEFT');
+			$this->db->join('users u','p.created_by = u.id','LEFT');
 			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
 			$this->db->where('p.bank is not null');
 			if($type == 'pending'){

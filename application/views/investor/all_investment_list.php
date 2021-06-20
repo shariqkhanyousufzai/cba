@@ -38,6 +38,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Full Name</th>
                                 <th>Channel Name</th>
                                 <th>Bank</th>
                                 <th>Total Amount</th>
@@ -45,7 +46,7 @@
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
-                        </thead>
+                        </thead> 
                         <tbody>
                             <?php
                             $i = 1;
@@ -53,6 +54,7 @@
                             ?> 
                             <tr>
                                 <td><?= $i ?></td>
+                                <td><?= $getPayment->full_name ?></td>
                                 <td><?= $getPayment->name ?></td>
                                 <td><?= $getPayment->bank?></td>
                                 <td><?= round($getPayment->total_investment,2) ?></td>
@@ -70,13 +72,19 @@
                                     ?>
                                 </td>
                                 <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
-                                <td>
-                                    <a href="<?php echo base_url('investor/approve_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon" title="Approve Now">
+                                <td align="center">
+                                    <?php
+                                    if($getPayment->status == 0){
+                                    ?>
+                                    <a  href="<?php echo base_url('investor/approve_investment/'.$getPayment->id); ?>" class="actionsbtn btn btn-md w-lg-100 btn-dark btn-icon" title="Approve Now">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-check-circle"></i>
                                         </span>
                                     </a>
-                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon get_msg" title="Send Message">
+                                    <?php
+                                    }
+                                    ?>
+                                    <a  href="#" data-id="<?=$getPayment->id?>" class="btn ml-1 btn-md w-lg-100 btn-dark btn-icon get_msg actionsbtn" title="Send Message">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-envelope-open-text"></i>
                                         </span>

@@ -64,7 +64,7 @@
                                     </div>
                                     <!--end: Wizard Step 2-->
                                     <!--begin: Wizard Step 3-->
-                                    <div class="pb-5" data-wizard-type="step-content">
+                                    <div class="pb-5 pl-10" data-wizard-type="step-content">
                                         <h4 class="mb-10 font-weight-bold text-dark" align="center">Channel Details</h4>
                                         <!--begin::Select-->
                                         <div class="row">

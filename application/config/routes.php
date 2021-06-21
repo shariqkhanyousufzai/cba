@@ -99,5 +99,13 @@ $route['investor/getmsg'] = 'investor/getmsg';
 $route['investor/approve_investment/(:num)'] = 'investor/approve_investment/$1';
 //investor view
 $route['investor/investor_profile/(:num)'] = 'investor/investor_profile/$1';
+//create promo
+$route['promo'] = 'promo';
+// add promo code
+$route['promo/add'] = 'promo/add';
+//deactivated promo code
+$route['promo/deactive_promo/(:num)'] = 'promo/deactive_promo/$1';
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

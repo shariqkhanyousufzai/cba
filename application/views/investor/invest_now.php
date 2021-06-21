@@ -48,14 +48,25 @@
                                             <!--begin::Input-->
                                             <div class="row">
                                                 <?php
+                                                $min=0;
+                                                $max=2;
+                                                $rand = rand($min,$max);
+                                                $ran = 0;
                                                 foreach ($getChannels as $getChannel) {
+                                                      
+                                                    if($ran == $rand){
+                                                        $classcheck = 'checkedchan';
+                                                    }else{
+                                                         $classcheck = '';
+                                                    }
                                                     ?>
                                                     <div class="col-sm-4">
-                                                        <input type="checkbox" id="<?=$getChannel->name?>" />
-                                                        <label style="text-align: center;" for="<?=$getChannel->name?>" class="check"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
-                                                        <input type="number" class="form-control <?=$getChannel->name?> channel_invest" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>"  />
+                                                        <input  type="checkbox" id="<?=$getChannel->name?>" />
+                                                        <label style="text-align: center;" for="<?=$getChannel->name?>" class="check <?=$classcheck?>"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
+                                                        <!-- <input type="hidden" class="form-control <?=$getChannel->name?> channel_invest" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>"  value="0"/> -->
                                                     </div>
                                                     <?php
+                                                    $ran++;
                                                 }
                                                 ?>
                                             </div>
@@ -68,55 +79,105 @@
                                         <h4 class="mb-10 font-weight-bold text-dark" align="center">Channel Details</h4>
                                         <!--begin::Select-->
                                         <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="music" style="display: none;">
+                                            <div class="col-sm-12">
+                                                <div class="row music" style="display: none;" align="center">
+                                                <div class="col-sm-4" align="center">
                                                     <img class="detailsimg" src="<?=$assets?>/media/1.PNG" />
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
+                                                    <div class="row" align="center">
+                                                        <div class="col-sm-12" align="center">
                                                             <label>Channel Name: <b>Music</b></label>
                                                         </div>
-                                                        <div class="col-sm-6">
-                                                           <label>Invested: <b class="music_invest"></b></label>
+                                                        
+                                                   </div>
+                                               </div>
+                                               <div class="col-sm-8">
+                                                   <div class="row">
+                                                       <div class="col-sm-12">
+                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_music"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_music"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Set Frequency: 
+                                                           <select class="form-control" name="frequency_music">
+                                                               <option value="weekly">Weekly</option>
+                                                               <option value="biweely">Bi-weekly</option>
+                                                               <option value="monthly">Monthly</option>
+                                                           </select>
+                                                           </label>
                                                        </div>
                                                    </div>
                                                </div>
+                                               </div>
                                            </div>
-                                           <div class="col-sm-4">
-                                               <div class="food" style="display: none;">
-                                                <img class="detailsimg" src="<?=$assets?>/media/2.PNG" />
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <label>Channel Name: <b>Food</b></label>
+                                           <div class="col-sm-12">
+                                             <div class="row food" style="display: none;" >
+                                                 <div class="col-sm-4" align="center">
+                                                    <img class="detailsimg" src="<?=$assets?>/media/2.PNG" />
+                                                    <div class="row" align="center">
+                                                        <div class="col-sm-12" align="center">
+                                                            <label>Channel Name: <b>Food</b></label>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                       <label>Invested: <b class="food_invest"></b></label>
+                                                   </div>
+                                                   <div class="col-sm-8">
+                                                   <div class="row">
+                                                       <div class="col-sm-12">
+                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_food"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_food"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Set Frequency: 
+                                                           <select class="form-control" name="frequency_food">
+                                                               <option value="weekly">Weekly</option>
+                                                               <option value="biweely">Bi-weekly</option>
+                                                               <option value="monthly">Monthly</option>
+                                                           </select>
+                                                           </label>
+                                                       </div>
                                                    </div>
                                                </div>
-                                           </div>
-                                       </div>
-                                       <div class="col-sm-4">
-                                           <div class="sport" style="display: none;">
-                                            <img class="detailsimg" src="<?=$assets?>/media/3.PNG" />
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label>Channel Name: <b>Sport</b></label>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                   <label>Invested: <b class="sport_invest"></b></label>
-                                               </div>
-                                           </div>
 
-                                       </div>
+                                         </div>
+                                           </div>
+                                       <div class="col-sm-12">
+                                         <div class="row sport" style="display: none;" >
+                                             <div class="col-sm-4" align="center">
+                                                <img class="detailsimg" src="<?=$assets?>/media/3.PNG" />
+                                                <div class="row" align="center">
+                                                    <div class="col-sm-12" align="center">
+                                                        <label>Channel Name: <b>Sport</b></label>
+                                                    </div>
+                                             </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                   <div class="row">
+                                                       <div class="col-sm-12">
+                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_sport"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_sport"></label>
+                                                       </div>
+                                                       <div class="col-sm-6">
+                                                           <label>Set Frequency: 
+                                                           <select class="form-control" name="frequency_sport">
+                                                               <option value="weekly">Weekly</option>
+                                                               <option value="biweely">Bi-weekly</option>
+                                                               <option value="monthly">Monthly</option>
+                                                           </select>
+                                                           </label>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                     </div>
                                    </div>
                                </div>
                                <div class="row">
                                  <div class="col-sm-12">
-                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The <span class="termsclick">Terms and Conditions</span></label>
-                                     <!--begin::Section-->
-                                     <div class="contract" style="display: none;">
-                                     <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
-                                        <?=$getContract->body?>
-                                    </div>
+                                    
                                     <input type="hidden" name="bank" class="bank">
                                     <input type="hidden" class="contract_val" name="contract" >
                                     <input type="hidden" class="contract_id" name="contract_id" value="<?=$getContract->id?>" >
@@ -140,6 +201,14 @@
                             </div>
                             <div class="save_msg"></div>
                             <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The <span class="termsclick">Terms and Conditions</span></label>
+                                     <!--begin::Section-->
+                                     <div class="contract" style="display: none;">
+                                     <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
+                                        <?=$getContract->body?>
+                                    </div>
+                                </div>
                                 <div class="col-sm-4">
                                     <div class="mt-2 mb-2 paymentcards">
                                         <h4 class="mb-5 font-weight-bold text-dark">Direct Bank Transfer: </h4>

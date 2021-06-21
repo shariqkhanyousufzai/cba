@@ -518,4 +518,9 @@ $(document).ready(function(){
           console.error("Error:", error);
         });
     });
+
+    
+    setTimeout(function(){
+    	$('.checkedchan').trigger('click');
+    },500)
 })

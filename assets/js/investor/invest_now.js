@@ -2,6 +2,7 @@
 
 // Class definition
 var lastPaymentId = 0;
+
 var investmenForm = function () {
 	// Base elements
 	var _wizardEl;
@@ -9,6 +10,8 @@ var investmenForm = function () {
 	var _wizardObj;
 	var _validations = [];
 	var deleteStep = 0;
+	var channelSelected = '';
+	var totalVal = 0;
 	
 	// Private functions
 	var _initWizard = function () {
@@ -20,7 +23,63 @@ var investmenForm = function () {
 
 		// Validation before going to next page
 		_wizardObj.on('change', function (wizard) {
+
+			var checkChannel = [];
+			if ($('#music').is(':checked')) {
+				checkChannel.push('music');
+			}
+			if ($('#food').is(':checked')) {
+				checkChannel.push('food');
+			}
+			if ($('#sport').is(':checked')) {
+				checkChannel.push('sport');
+			}
+			if(checkChannel.length > 1 || checkChannel.length < 1){
+				Swal.fire({
+							text: "Sorry, looks like you selected multiple channels.Please select one",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						});
+			return false;
+
+			}else{
+				channelSelected = checkChannel[0];
+			}
+
+			if(wizard.getStep() == 2){
+				if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() == ''){
+					Swal.fire({
+							text: "Sorry, looks like you did not select any amount",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						});
+					return false;
+				}else if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() < 10){
+					Swal.fire({
+							text: "Sorry, You can invest minimum 10$ amount or more",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						});
+					return false;
+				}
+
+
+			}
+
 			if (wizard.getStep() > wizard.getNewStep()) {
+
 				return; // Skip if stepped back
 			}
 
@@ -54,6 +113,8 @@ var investmenForm = function () {
 
 		// Change event
 		_wizardObj.on('changed', function (wizard) {
+
+
 			var ChannelReplace = '<ol>';
 			var ChannelsIds = {
 				'food' : 'Food lover Distrct (ID no. UC5OXEAL2wW7ccJu3gEZnl0w)',
@@ -71,10 +132,15 @@ var investmenForm = function () {
 			  PriceTot += (parseInt(chanelArray[key]) * parseInt(ChannelPrice));
 			  i++;
 			}
-			$('.total_investment').val(PriceTot);
+			$('.total_investment').val($('input[name="initial_investment_'+channelSelected+'"]').val());
+			var totalValContract = $('input[name="initial_investment_'+channelSelected+'"]').val();
 			ChannelReplace += '</ol>';
-			console.log(ChannelReplace);
-			if(wizard.getStep() == 2){
+			if(wizard.getStep() == 3){
+				var totaltxt =  parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt($('#mywallet').html());
+				$('.wallet_txt').html($('#mywallet').html()+'$');
+				$('.channelnametxt').html(channelSelected);
+				$('.investmenttxt').html($('input[name="initial_investment_'+channelSelected+'"]').val()+'$');
+				$('.totaltxt').html(totaltxt+'$');
 				var getContract = $('.contract').html();
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
@@ -86,15 +152,15 @@ var investmenForm = function () {
 				.replace("{City}", '<span class="text-warning">'+ReplaceArray['City']+'</span>')
 				.replace("{Date}", '<span class="text-warning">'+ReplaceArray['Date']+'</span>')
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
-				.replace("{Channel}", '<span class="text-warning">'+ChannelReplace+'</span>')
+				.replace("{Channel}", '<span class="text-warning">'+ChannelsIds[channelSelected]+'</span>')
 				.replace("{Own}", '<span class="text-warning">'+Own+'</span>')
-				.replace("{PriceForSubTotal}", '<span class="text-warning">'+PriceTot+'</span>')
+				.replace("{PriceForSubTotal}", '<span class="text-warning">'+totalValContract+'</span>')
 				.replace("{Kr}", '<span class="text-warning">'+ChannelVat+'</span>')
 
 				$('.contract').html(replaced);
 			}
-
 			if(deleteStep > 2){
+
 				$.ajax({
 			          url:BASEURL+"investor/delete_investment",
 			          method: 'post',
@@ -110,13 +176,14 @@ var investmenForm = function () {
 			}
 
 			if(wizard.getStep() == 3){
+				totalVal =  $('input[name="initial_investment_'+channelSelected+'"]').val();
 				deleteStep = wizard.getStep();
 				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
 				  </button></div>`);
 				$('.contract_val').val($('.contract').html());
 				$.ajax({
-			          url:BASEURL+"investor/add_investment",
+			          url:BASEURL+"investor/add_investment_single",
 			          method: 'post',
 			          data: $('#investmenForm').serialize(),
 			          dataType: "json",
@@ -379,7 +446,6 @@ var chanelArray = [];
 $(document).ready(function(){
 	$(document).on('click','label.check',function(){
 		var getChannel = $(this).attr('for');
-		console.log(getChannel);
 		if ($('#'+getChannel).prop('checked')) {
 			$('.'+getChannel).css('visibility','hidden');
 			$('.'+getChannel).hide();
@@ -394,15 +460,13 @@ $(document).ready(function(){
 			 $('.'+getChannel+'_invest').html(); 
 		}
 	    var getChannel = $(this).attr('data-name');
-	    console.log('.'+getChannel+'_invest');
 	    $('.'+getChannel+'_invest').html($(this).val()); 
 		chanelArray[getChannel] = $(this).val();
-		console.log(chanelArray);
 	});
 
 	
 	$(document).on('click','.termsclick',function(e){
-		$('.contract').show();
+		$('.contract').toggle();
 	});
 
 
@@ -419,7 +483,8 @@ $(document).ready(function(){
 	          dataType: "json",
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
-	          		location.reload();
+	          		// location.reload();
+	          		window.location.href = BASEURL+'investor/my_investment_list';
 	          	}
 	          }
 	    })
@@ -440,13 +505,12 @@ $(document).ready(function(){
  		return actions.order.create({
  			purchase_units: [{
  				amount: {
- 					value: '1',
+ 					value:  parseInt($('.total_investment').val()) - parseInt($('#mywallet').html()),
  				}
  			}]
  		});
  	},
  	onClick: function (data, actions) {
- 		console.log(data);
  		$('.paypal_btn_div').css({
  			'position': 'static',
  			'z-index': '-1',
@@ -492,7 +556,7 @@ $(document).ready(function(){
 
     checkoutButton.addEventListener("click", function () {
     	var fd = new FormData();
-		fd.append('total', $('.total_investment').val());
+		fd.append('total', parseInt($('.total_investment').val()) - parseInt($('#mywallet').html()));
 		fd.append('payment_id', lastPaymentId);
 		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId);
 		fd.append('cancel_url', BASEURL);

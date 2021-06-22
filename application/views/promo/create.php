@@ -82,11 +82,25 @@
                                 }
                                 ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('promo/deactive_promo/'.$promo->id); ?>" class="btn btn-sm btn-clean btn-icon" title="View Customer">
+                                    <?php
+                                    if($promo->status == 0){
+                                    ?>
+                                    <a href="<?php echo base_url('promo/deactive_promo/'.$promo->id); ?>" class="btn btn-sm btn-clean btn-icon" title="Deactivate">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="flaticon-refresh"></i>
                                         </span>
                                     </a>
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <a href="<?php echo base_url('promo/active_promo/'.$promo->id); ?>" class="btn btn-sm btn-clean btn-icon" title="Activate">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon2-checkmark"></i>
+                                        </span>
+                                    </a>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                             <?php

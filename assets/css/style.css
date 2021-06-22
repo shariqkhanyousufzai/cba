@@ -104,8 +104,14 @@ button#kt_aside_toggle {
 }
 
 label.termconditions {
-    width: 90%!important;
+    width: 82px!important;
     display: inline-block!important;
+    padding-right: 0px;
+    text-align: right;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    border: unset;
 }
 
 input.termconditionscheck {
@@ -116,4 +122,23 @@ input.termconditionscheck {
 }
 .termsclick{
     color: #0075ff;
+}
+.recur_disable{
+    border: 1px solid #000;
+    width: 94%;
+    margin: 0 auto;
+    background: #8080801f;
+    cursor: not-allowed;
+}
+
+.recur_disable:hover {
+    cursor: not-allowed;
+}
+.recur_disable:after {
+    content: "Coming Soon";
+    position: absolute;
+    right: -69px;
+    background: #c38b3b;
+    color: #fff;
+    padding: 7px;
 }

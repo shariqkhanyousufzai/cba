@@ -27,6 +27,14 @@ class Investor_model extends CI_Model
 		return $q->result()[0]->cost_per_share;
 	}
 
+	public function getChannelShareByName($name){
+		$this->db->select('id');
+		$this->db->from('channels');
+		$this->db->where('name',$name);
+		$q = $this->db->get();
+		return $q->result()[0]->id;
+	}
+
 	public function getCurrentUser(){
 		$this->db->select('*');
 		$this->db->from('users');
@@ -74,6 +82,25 @@ class Investor_model extends CI_Model
 			}
 			return $res;
 			
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+
+	public function addSingleInvestment($data){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			if($this->db->insert('investments', $data)){
+				$data['id'] = $this->db->insert_id();
+				$res["data"][] = $data;
+				return $res;
+		}
 		}catch(\Exception $e)
 		{
 			$res["msg"] = "failed";
@@ -307,5 +334,14 @@ class Investor_model extends CI_Model
 		//delete the contract
 		$this->db->where('payment_id', $id);
 		$this->db->delete('i_contracts');
+	}
+
+	public function updateWallet(){
+		$this->db->where('user_id',$this->session->userdata('user_id'));
+		$this->db->set('is_deleted',1);
+		if($this->db->update('wallet')){
+			return true;
+		}
+		return false;
 	}
 }

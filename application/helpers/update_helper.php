@@ -92,6 +92,7 @@ if ( ! function_exists('wallet'))
         {
             $CI =& get_instance();
             $CI->db->where('user_id',$CI->session->userdata('user_id'));
+            $CI->db->where('is_deleted',0);
             $query = $CI->db->get('wallet');
             if($query->num_rows() > 0){
             return $query->result()[0]->amount;

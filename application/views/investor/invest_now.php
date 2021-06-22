@@ -61,7 +61,7 @@
                                                     }
                                                     ?>
                                                     <div class="col-sm-4">
-                                                        <input  type="checkbox" id="<?=$getChannel->name?>" />
+                                                        <input  type="checkbox" value="<?=$getChannel->name?>" name="channelname" id="<?=$getChannel->name?>" />
                                                         <label style="text-align: center;" for="<?=$getChannel->name?>" class="check <?=$classcheck?>"><img src="<?=$assets?>/media/<?=$getChannel->img?>" /></label>
                                                         <!-- <input type="hidden" class="form-control <?=$getChannel->name?> channel_invest" name="channels[<?=$getChannel->id?>]" data-name="<?=$getChannel->name?>"  value="0"/> -->
                                                     </div>
@@ -90,22 +90,28 @@
                                                         
                                                    </div>
                                                </div>
-                                               <div class="col-sm-8">
+                                               <div class="col-sm-7">
                                                    <div class="row">
                                                        <div class="col-sm-12">
-                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_music"></label>
+                                                           <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_music"></label>
                                                        </div>
-                                                       <div class="col-sm-6">
-                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_music"></label>
-                                                       </div>
-                                                       <div class="col-sm-6">
-                                                           <label>Set Frequency: 
-                                                           <select class="form-control" name="frequency_music">
-                                                               <option value="weekly">Weekly</option>
-                                                               <option value="biweely">Bi-weekly</option>
-                                                               <option value="monthly">Monthly</option>
-                                                           </select>
-                                                           </label>
+                                                       <div class="col-sm-12">
+                                                         <div class="row recur_disable">
+
+                                                           <div class="col-sm-6">
+                                                             <label>Recurring Investment ($): <input class="form-control " disabled="disabled" type="number" name="recurring_investment_music"></label>
+                                                           </div>
+                                                           <div class="col-sm-6">
+                                                             <label>Set Frequency: 
+                                                               <select class="form-control" disabled="disabled" name="frequency_music">
+                                                                 <option value="weekly">Weekly</option>
+                                                                 <option value="biweely">Bi-weekly</option>
+                                                                 <option value="monthly">Monthly</option>
+                                                               </select>
+                                                             </label>
+                                                           </div>
+
+                                                         </div>
                                                        </div>
                                                    </div>
                                                </div>
@@ -121,22 +127,28 @@
                                                         </div>
                                                     </div>
                                                    </div>
-                                                   <div class="col-sm-8">
+                                                   <div class="col-sm-7">
                                                    <div class="row">
                                                        <div class="col-sm-12">
-                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_food"></label>
+                                                           <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_food"></label>
                                                        </div>
+                                                       <div class="col-sm-12">
+                                                         <div class="row recur_disable">
+                                                           
                                                        <div class="col-sm-6">
-                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_food"></label>
+                                                           <label>Recurring Investment ($): <input class="form-control" type="number" disabled="disabled" name="recurring_investment_food"></label>
                                                        </div>
                                                        <div class="col-sm-6">
                                                            <label>Set Frequency: 
-                                                           <select class="form-control" name="frequency_food">
+                                                           <select class="form-control" disabled="disabled" name="frequency_food">
                                                                <option value="weekly">Weekly</option>
                                                                <option value="biweely">Bi-weekly</option>
                                                                <option value="monthly">Monthly</option>
                                                            </select>
                                                            </label>
+                                                       </div>
+                                                       
+                                                         </div>
                                                        </div>
                                                    </div>
                                                </div>
@@ -153,22 +165,28 @@
                                                     </div>
                                              </div>
                                             </div>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-7">
                                                    <div class="row">
                                                        <div class="col-sm-12">
-                                                           <label>Initail Investment ($): <input class="form-control" type="number" name="initial_investment_sport"></label>
+                                                           <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_sport"></label>
                                                        </div>
+                                                       <div class="col-sm-12">
+                                                         <div class="row recur_disable">
+                                                           
                                                        <div class="col-sm-6">
-                                                           <label>Recurring Investment ($): <input class="form-control" type="number" name="recurring_investment_sport"></label>
+                                                           <label>Recurring Investment ($): <input class="form-control" type="number" disabled="disabled" name="recurring_investment_sport"></label>
                                                        </div>
                                                        <div class="col-sm-6">
                                                            <label>Set Frequency: 
-                                                           <select class="form-control" name="frequency_sport">
+                                                           <select class="form-control" disabled="disabled" name="frequency_sport">
                                                                <option value="weekly">Weekly</option>
                                                                <option value="biweely">Bi-weekly</option>
                                                                <option value="monthly">Monthly</option>
                                                            </select>
                                                            </label>
+                                                       </div>
+                                                       
+                                                         </div>
                                                        </div>
                                                    </div>
                                                </div>
@@ -184,8 +202,6 @@
                                     <input type="hidden" name="order_id" value="">
                                     <input type="hidden" class="total_investment" name="total_investment" >
                                     <!--end::Section-->
-
-
                                 </div>
                             </div>
                              <!--end::Select-->
@@ -201,14 +217,45 @@
                             </div>
                             <div class="save_msg"></div>
                             <div class="row">
+                              <div class="col-sm-12">
+                                  <div class="row" align="center">
+                                    <div class="col-sm-6" style="margin: 0 auto">
+                                  <div>
+                                    <h4>Payment Details: </h4>
+                                  </div>
+                                  <table class="table table-bordered" style="border: 2px solid #ce923c;">
+                                    <tbody>
+                                      <tr style="border: 2px solid #ce923c;">
+                                        <th scope="row">Channel Name:</th>
+                                        <td class="channelnametxt"></td>
+                                      </tr>
+                                      <tr style="border: 2px solid #ce923c;">
+                                        <th scope="row">Investment:</th>
+                                        <td class="investmenttxt"></td>
+                                      </tr>
+                                      <tr style="border: 2px solid #ce923c;">
+                                        <th scope="row">Wallet:</th>
+                                        <td class="wallet_txt"></td>
+                                      </tr>
+                                      <tr style="border: 2px solid #ce923c;">
+                                        <th scope="row">Total: </th>
+                                        <td class="totaltxt"></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="col-sm-12">
-                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The <span class="termsclick">Terms and Conditions</span></label>
+                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The </label> <span class="termsclick">Terms and Conditions</span>
                                      <!--begin::Section-->
                                      <div class="contract" style="display: none;">
                                      <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
                                         <?=$getContract->body?>
                                     </div>
                                 </div>
+                                
                                 <div class="col-sm-4">
                                     <div class="mt-2 mb-2 paymentcards">
                                         <h4 class="mb-5 font-weight-bold text-dark">Direct Bank Transfer: </h4>

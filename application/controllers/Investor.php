@@ -80,6 +80,12 @@ class Investor extends CI_Controller {
 		$this->page_construct('investor/pay_investment',$data);
 	}
 
+	public function view_investment()
+	{
+		$data['getPayments']['data'] = $this->investor_model->getPayments();
+		$this->page_construct('investor/view_investment',$data);
+	}
+
 	public function approve_investment($id){
 		if($this->session->userdata('level') == 1){
 			if($this->investor_model->updatePaymentStatus($id)){
@@ -91,11 +97,44 @@ class Investor extends CI_Controller {
 		}
 	}
 
-	
+	public function add_investment_single()
+	{
+		//making data for payment
+		$payment_data = array(
+			'created_by' => $this->session->userdata('user_id'),
+			'total_investment' => $this->input->post('total_investment'),
+		);
+		$payment_id = $this->investor_model->addPayment($payment_data);
+
+		$channelShare = $this->investor_model->getChannelShareByName($this->input->post('channelname'));
+
+		$investment_data = array(
+			'channel_id' => $channelShare,
+			'payment_id' => $payment_id['data'][0]['id'],
+			'amount' => $this->input->post('total_investment'),
+			'percentage' => 0,
+			'created_by' => $this->session->userdata('user_id')
+		);
+		//insert the investment
+		$investment_result = $this->investor_model->addSingleInvestment($investment_data);
+
+		//insert contract 
+		$i_contract_data = array(
+			'channels' => $channelShare,
+			'contract' => $this->input->post('contract'),
+			'payment_id' => $payment_id['data'][0]['id'],
+			'contract_id' => $this->input->post('contract_id'),
+			'created_by' => $this->session->userdata('user_id')
+
+		);
+		$i_contract_result = $this->investor_model->addContract($i_contract_data);
+		echo json_encode($payment_id['data'][0]['id']);
+	}
 
 	
 	public function add_investment()
 	{
+		
 		//for channels
 		$channelArray = array();
 		//for comma seprated channel id
@@ -114,7 +153,6 @@ class Investor extends CI_Controller {
 		$payment_data = array(
 			'created_by' => $this->session->userdata('user_id'),
 			'total_investment' => $this->input->post('total_investment'),
-			'created_by' => $this->session->userdata('user_id')
 		);
 		$payment_id = $this->investor_model->addPayment($payment_data);
 		//insert payment end
@@ -148,6 +186,7 @@ class Investor extends CI_Controller {
 
 	public function update_payment_method(){
 		$res = $this->investor_model->updatePayment($_POST['lastPaymentId'],$_POST['getPaymentMethod']);
+		$this->investor_model->updateWallet();
 		$this->session->set_flashdata('message', 'Request Has Been Send!');
 		echo json_encode($res);
 	}

@@ -58,4 +58,13 @@ class Promo extends CI_Controller {
 		}
 		redirect('promo','refresh');
 	}
+
+	public function active_promo($id){
+		if($this->promo_model->activePromo($id)){
+		$this->session->set_flashdata('message', 'Promo Code Updated');
+		}else{
+			$this->session->set_flashdata('message', 'Promo Code Update Failed');
+		}
+		redirect('promo','refresh');
+	}
 }

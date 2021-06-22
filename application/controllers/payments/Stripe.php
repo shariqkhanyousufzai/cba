@@ -23,6 +23,7 @@ class Stripe extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('payments/stripe_model');
+        $this->load->model('investor_model');
         if (!$this->ion_auth->logged_in())
 			{            
 			$this->session->set_userdata('requested_page', $this->uri->uri_string());
@@ -33,6 +34,7 @@ class Stripe extends CI_Controller {
 	public function update_payment($id)
 	{
 		$this->stripe_model->updatePayment($id);
+		$this->investor_model->updateWallet();
 		$this->session->set_flashdata('message', 'Payment Success');
 		redirect('investor/my_investment_list','refresh');
 	}

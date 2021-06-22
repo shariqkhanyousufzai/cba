@@ -89,6 +89,8 @@ $route['investor/my_investment_list'] = 'investor/my_investment_list';
 $route['investor/investments'] = 'investor/all_investment_list';
 //pay investment
 $route['investor/pay_investment'] = 'investor/pay_investment';
+//view investment
+$route['investor/view_investment'] = 'investor/view_investment';
 //stripe pay
 $route['stripe/success/(:num)'] = 'payments/stripe/update_payment/$1';
 // send mssage
@@ -105,6 +107,9 @@ $route['promo'] = 'promo';
 $route['promo/add'] = 'promo/add';
 //deactivated promo code
 $route['promo/deactive_promo/(:num)'] = 'promo/deactive_promo/$1';
+// active promo code
+$route['promo/active_promo/(:num)'] = 'promo/active_promo/$1';
+
 
 
 $route['404_override'] = '';

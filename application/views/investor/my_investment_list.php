@@ -53,7 +53,7 @@
                             <tr>
                                 <td><?= $i ?></td>
                                 <td><?= $getPayment->bank?></td>
-                                <td><?= round($getPayment->total_investment,2) ?></td>
+                                <td><?= round($getPayment->total_investment,2) ?>$</td>
                                 <td>
                                     <?php
                                     if($getPayment->status == 0){
@@ -69,12 +69,26 @@
                                 </td>
                                 <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('investor/pay_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon" title="Pay Now">
+                                    <?php
+                                    if($getPayment->status == 0){
+                                    ?>
+                                    <a href="<?php echo base_url('investor/pay_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon actionsbtn" title="Pay Now">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fab la-amazon-pay"></i>
                                         </span>
                                     </a>
-                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Send Message">
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <a href="<?php echo base_url('investor/view_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon actionsbtn" title="Pay Now">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon-eye"></i>
+                                        </span>
+                                    </a>
+                                    <?php
+                                    }
+                                    ?>
+                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn  btn-md w-lg-100 btn-dark btn-icon send_msg actionsbtn ml-1" title="Send Message">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-envelope"></i>
                                         </span>

@@ -27,4 +27,13 @@ class Promo_model extends CI_Model
 		return false;
 	}
 
+	function activePromo($id){
+		$this->db->set('status',0);
+		$this->db->where('id',$id);
+		if($this->db->update('promo')){
+			return true;
+		}
+		return false;
+	}
+
 }

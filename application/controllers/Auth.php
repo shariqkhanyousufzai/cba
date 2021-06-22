@@ -78,7 +78,7 @@ class Auth extends CI_Controller
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/dashboard', 'refresh');
+				redirect('investor/invest_now', 'refresh');
 			}
 			else
 			{
@@ -621,12 +621,14 @@ class Auth extends CI_Controller
 		$this->db->where('code',$code);
 		$this->db->where('is_deleted',0);
 		$this->db->where('status',0);
+		$this->db->order_by('id','DESC');
+		$this->db->limit(1);
 		$q = $this->db->get('promo');
 		if($q->num_rows() > 0){
 			$data = array(
 				'user_id' => $lastId,
 				'code' => $code,
-				'amount' => SIGNUP_AMOUNT,
+				'amount' => $q->result()[0]->amount,
 			);
 			$this->db->insert('wallet',$data);
 			return true;

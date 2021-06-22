@@ -140,7 +140,7 @@ var investmenForm = function () {
 				$('.wallet_txt').html($('#mywallet').html()+'$');
 				$('.channelnametxt').html(channelSelected);
 				$('.investmenttxt').html($('input[name="initial_investment_'+channelSelected+'"]').val()+'$');
-				$('.totaltxt').html(totaltxt+'$');
+				$('.totaltxt').html('-'+totaltxt+'$');
 				var getContract = $('.contract').html();
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')

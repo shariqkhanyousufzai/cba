@@ -62,7 +62,7 @@ var investmenForm = function () {
 							}
 						});
 					return false;
-				}else if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() == 0){
+				}else if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() >= parseInt(walletAmount)){
 					Swal.fire({
 							text: "Sorry, You can invest minimum 10$ amount or more",
 							icon: "error",

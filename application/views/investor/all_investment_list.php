@@ -57,7 +57,7 @@
                                 <td><?= $getPayment->full_name ?></td>
                                 <td><?= $getPayment->name ?></td>
                                 <td><?= $getPayment->bank?></td>
-                                <td><?= round($getPayment->total_investment,2) ?></td>
+                                <td>$<?= round($getPayment->total_investment,2) ?></td>
                                 <td>
                                     <?php
                                     if($getPayment->status == 0){

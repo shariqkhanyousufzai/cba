@@ -62,7 +62,7 @@ var investmenForm = function () {
 							}
 						});
 					return false;
-				}else if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() < 10){
+				}else if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() == 0){
 					Swal.fire({
 							text: "Sorry, You can invest minimum 10$ amount or more",
 							icon: "error",
@@ -136,11 +136,20 @@ var investmenForm = function () {
 			var totalValContract = $('input[name="initial_investment_'+channelSelected+'"]').val();
 			ChannelReplace += '</ol>';
 			if(wizard.getStep() == 3){
+				if((parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt(walletAmount)) == 0){
+					$('.showwallet').show();
+					$('.hidepayments').hide();
+
+				}else{
+					$('.showwallet').hide();
+					$('.hidepayments').show();
+				}
+
 				var totaltxt =  parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt($('#mywallet').html());
-				$('.wallet_txt').html($('#mywallet').html()+'$');
+				$('.wallet_txt').html('- $'+$('#mywallet').html());
 				$('.channelnametxt').html(channelSelected);
-				$('.investmenttxt').html($('input[name="initial_investment_'+channelSelected+'"]').val()+'$');
-				$('.totaltxt').html('-'+totaltxt+'$');
+				$('.investmenttxt').html('$'+$('input[name="initial_investment_'+channelSelected+'"]').val());
+				$('.totaltxt').html('$'+totaltxt);
 				var getContract = $('.contract').html();
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
@@ -471,6 +480,26 @@ $(document).ready(function(){
 
 
 	$(document).on('click','.paymentBtn',function(e){
+		e.preventDefault();
+		var getPaymentMethod = $(this).data('type');
+		$.ajax({
+	          url:BASEURL+"investor/update_payment_method",
+	          method: 'post',
+	          data: {
+	          	getPaymentMethod : getPaymentMethod,
+	          	lastPaymentId : lastPaymentId
+	          },
+	          dataType: "json",
+	          success: function( response ) {
+	          	if( response.msg == 'success'){
+	          		// location.reload();
+	          		window.location.href = BASEURL+'investor/my_investment_list';
+	          	}
+	          }
+	    })
+	});	
+	
+	$(document).on('click','.paymentBtnWallet',function(e){
 		e.preventDefault();
 		var getPaymentMethod = $(this).data('type');
 		$.ajax({

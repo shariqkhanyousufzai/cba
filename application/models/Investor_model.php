@@ -151,6 +151,9 @@ class Investor_model extends CI_Model
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
+			if($getPaymentMethod == 'Wallet'){
+			$this->db->set('status',1);
+			}
 			$this->db->set('bank',$getPaymentMethod);
 			$this->db->where('id',$lastPaymentId);
 			if($this->db->update('payments')){

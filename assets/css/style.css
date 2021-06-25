@@ -142,3 +142,19 @@ input.termconditionscheck {
     color: #fff;
     padding: 7px;
 }
+
+.promodiv {
+    position: absolute;
+    z-index: 1;
+    background: #000;
+    width: 100%;
+    bottom: 0px;
+    text-align: center;
+    padding: 7px 0px;
+    color: #fff;
+}
+
+.promodiv button {
+    padding: 4px;
+    margin-left: 15px;
+}

@@ -103,6 +103,40 @@
 				</div>
 			</div>
 		</div>
+		<?php
+		if($this->session->userdata('level') != 1){
+		?>
+		<div class=" promodiv">Do You Have Code? <button data-toggle="modal" data-target="#myModalApplyCode" class="btn btn-dark">Apply one now!</button></div>
+
+		<div id="myModalApplyCode" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Apply Code To Get Free Balance In Wallet</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<label>Code:</label>
+								<input type="text" name="walletcode" class="walletcode form-control">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-dark applycode" >Apply</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<?php
+		}
+		?>
+
 		<!--end::Chat Panel-->
 		<!--begin::Scrolltop-->
 		
@@ -159,6 +193,52 @@
 		<?php
 		}
 		?>
+
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(document).on('click','.applycode',function(){
+					var getCode = $('.walletcode').val();
+					$.ajax({
+						url : '<?=base_url("promo/applycode")?>',
+						method: 'post',
+				          data: {
+				          	code : getCode
+				          },
+				          dataType: "json",
+				          success: function( response ) {
+				          	var status = response.status;
+				          	var msg = response.msg;
+				          	if(status == 'success'){
+				          		Swal.fire({
+									  title: 'Congracts!',
+									  text: msg,
+									  icon: 'success',
+									  showCancelButton: false,
+									  showConfirmButton: true,
+									  confirmButtonColor: false,
+									  cancelButtonColor: '#d33',
+									}).then((result) => {
+									  if (result.isConfirmed) {
+									    	location.reload();
+									  }
+									})
+				          	}else{
+				          		Swal.fire({
+									  title: 'Ops!',
+									  text: msg,
+									  icon: 'warning',
+									  showCancelButton: true,
+									  showConfirmButton: false,
+									  confirmButtonColor: false,
+									  cancelButtonColor: '#d33',
+									})
+				          	}
+				          }
+					})
+				});
+			});
+		</script>
 		<!--end::Page Scripts-->
 	</body>
 	<!--end::Body-->

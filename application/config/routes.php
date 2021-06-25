@@ -109,6 +109,8 @@ $route['promo/add'] = 'promo/add';
 $route['promo/deactive_promo/(:num)'] = 'promo/deactive_promo/$1';
 // active promo code
 $route['promo/active_promo/(:num)'] = 'promo/active_promo/$1';
+// apply code
+$route['promo/applycode'] = 'promo/applycode';
 
 
 

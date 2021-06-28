@@ -64,11 +64,12 @@ var investmenForm = function () {
 						});
 					return false;
 				}else if( parseInt($('input[name="initial_investment_'+checkChannel[0]+'"]').val()) >= parseInt(walletAmount)){
-				return true;
-				
+					console.log("About to fire add to cart");
+					fbq('track', 'AddToCart', {});	
+					return true;
 				}else{
 						Swal.fire({
-							text: "Sorry, You can investment should be greater or eqaul to you wallet",
+							text: "Sorry, Your investment should be greater than or equal to your wallet amount",
 							icon: "error",
 							buttonsStyling: false,
 							confirmButtonText: "Ok, got it!",
@@ -505,7 +506,12 @@ $(document).ready(function(){
 	          dataType: "json",
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
-	          		// location.reload();
+	          		// location.reload();	
+				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+					console.log("About to fire purchase pixel");
+					console.log("Amount = " + total_amount_paid);
+					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
+					console.log("Fired purchase pixel not firing old lead track pixel");
 	          		window.location.href = BASEURL+'investor/my_investment_list';
 	          	}
 	          }
@@ -525,6 +531,11 @@ $(document).ready(function(){
 	          dataType: "json",
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
+					var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+					console.log("About to fire purchase pixel");
+					console.log("Amount = " + total_amount_paid);
+					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
+					console.log("Fired purchase pixel not firing old lead track pixel");
 	          		// location.reload();
 	          		window.location.href = BASEURL+'investor/my_investment_list';
 	          	}
@@ -568,7 +579,16 @@ $(document).ready(function(){
  		var orderId = data.orderID;
  		return actions.order.capture().then(function(details) {
  			var mapIDArray = [details.create_time,details.update_time,details.id,details.status,details.links[0].href,details.payer.address.country_code,details.payer.email_address,details.payer.name.given_name,details.payer.payer_id,details.purchase_units[0].amount.value,details.purchase_units[0].payee.merchant_id,orderId,lastPaymentId];
- 			$.getJSON(BASEURL+"/payments/paypal/paypalPaymentMultiple" , { mapIDs: mapIDArray}, function(data){});
+ 			$.getJSON(BASEURL+"/payments/paypal/paypalPaymentMultiple" , { mapIDs: mapIDArray}, function(data){
+				if(data == 'Success'){
+					console.log("About to fire purchase pixel");
+					console.log("Amount = "+details.purchase_units[0].amount.value);
+					fbq('track', 'Purchase', {currency: "USD", value: details.purchase_units[0].amount.value});
+					console.log("Fired purchase pixel not firing old lead track pixel");
+					ajaxHitAdd('createInvesterFormDetails');
+					$('#createInvesterFormDetails').submit();
+				}
+			 });
  			$.ajax({
  				url:BASEURL+"investor/update_payment_method",
  				method: 'post',
@@ -594,13 +614,15 @@ $(document).ready(function(){
 	//stripe sca
 // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
+	// var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
     var checkoutButton = document.getElementById("checkout-button");
 
     checkoutButton.addEventListener("click", function () {
     	var fd = new FormData();
-		fd.append('total', parseInt($('.total_investment').val()) - parseInt($('#mywallet').html()));
+		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+		fd.append('total', total_amount_paid);
 		fd.append('payment_id', lastPaymentId);
-		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId);
+		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId + "/" + total_amount_paid);
 		fd.append('cancel_url', BASEURL);
 	      fetch(BASEURL+"/stripesca/create-checkout-session.php", {
 	        method: "POST",

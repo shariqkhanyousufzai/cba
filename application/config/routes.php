@@ -92,7 +92,7 @@ $route['investor/pay_investment'] = 'investor/pay_investment';
 //view investment
 $route['investor/view_investment'] = 'investor/view_investment';
 //stripe pay
-$route['stripe/success/(:num)'] = 'payments/stripe/update_payment/$1';
+$route['stripe/success/(:num)/(:num)'] = 'payments/stripe/update_payment/$1/$2';
 // send mssage
 $route['investor/sendmsg'] = 'investor/sendmsg';
 // get msg

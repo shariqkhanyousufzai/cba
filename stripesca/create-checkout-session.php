@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
-$stripe_secret = "sk_test_51HgCEqGBlKCKevlCteS062QOMFzlrrgAO2ytbwbLpPC7KnoCH4yuhi6boPB7BtWLNMv622p5qP1ASjANElpOtiys00zPpdoIDX";
+//$stripe_secret = "sk_test_51HgCEqGBlKCKevlCteS062QOMFzlrrgAO2ytbwbLpPC7KnoCH4yuhi6boPB7BtWLNMv622p5qP1ASjANElpOtiys00zPpdoIDX";
+$stripe_secret = "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";
 \Stripe\Stripe::setApiKey($stripe_secret);
 
 header('Content-Type: application/json');

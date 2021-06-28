@@ -23,7 +23,8 @@
   </body>
   <script type="text/javascript">
     // Create an instance of the Stripe object with your publishable API key
-    var stripe = Stripe("pk_test_51IJG0YCoSmX1B4OVSAiIB3BiXsakHaCoeLH7CCYFiQbfBLYd9DWCLUE0juvH7rlMnrYD93SgywqfrrkFNwtnWUhS008AmvrY5h");
+    //var stripe = Stripe("pk_test_51IJG0YCoSmX1B4OVSAiIB3BiXsakHaCoeLH7CCYFiQbfBLYd9DWCLUE0juvH7rlMnrYD93SgywqfrrkFNwtnWUhS008AmvrY5h");
+    var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
     var checkoutButton = document.getElementById("checkout-button");
 
     checkoutButton.addEventListener("click", function () {

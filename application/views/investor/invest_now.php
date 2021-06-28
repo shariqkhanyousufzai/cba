@@ -248,7 +248,7 @@
                                   </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The </label> <span class="termsclick">Terms and Conditions</span>
+                                    <input type="checkbox" name="termconditions" id="termconditions" class="termconditionscheck"><label class="termconditions" for="termconditions">Accept The </label> <span class="termsclick"><a href="https://cba.as/terms-of-trade/" target="_blank"> Terms and Conditions </a></span>
                                      <!--begin::Section-->
                                      <div class="contract" style="display: none;">
                                      <h4 class="mb-10 font-weight-bold text-dark" align="center">Review your Details and Submit</h4>
@@ -356,6 +356,9 @@
     var ChannelVat = '<?=VAT?>';
     var BASEURL = '<?=base_url()?>';
     var walletAmount = <?= wallet()  ?>;
+    var music_cost_per_share = '<?=$getChannels[0]->cost_per_share?>';
+    var food_cost_per_share = '<?=$getChannels[1]->cost_per_share?>';
+    var sport_cost_per_share = '<?=$getChannels[2]->cost_per_share?>';
     var ReplaceArray = 
     {
         Name : '<?=$user->full_name?>',

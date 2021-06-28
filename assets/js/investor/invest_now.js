@@ -12,6 +12,7 @@ var investmenForm = function () {
 	var deleteStep = 0;
 	var channelSelected = '';
 	var totalVal = 0;
+	var share = '';
 	
 	// Private functions
 	var _initWizard = function () {
@@ -23,7 +24,7 @@ var investmenForm = function () {
 
 		// Validation before going to next page
 		_wizardObj.on('change', function (wizard) {
-
+			$('.promodiv').show();
 			var checkChannel = [];
 			if ($('#music').is(':checked')) {
 				checkChannel.push('music');
@@ -154,6 +155,14 @@ var investmenForm = function () {
 				$('.investmenttxt').html('$'+$('input[name="initial_investment_'+channelSelected+'"]').val());
 				$('.totaltxt').html('$'+totaltxt);
 				var getContract = $('.contract').html();
+				if(channelSelected == 'music'){
+					share = music_cost_per_share;
+				}else if(channelSelected == 'sport'){
+					share = sport_cost_per_share;
+				}else if(channelSelected == 'food'){
+					share = food_cost_per_share;
+				}
+				var OwnContract = Math.round((parseInt(totaltxt) * 100)/parseInt(share))+'%';
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
 				.replace("{Address}", '<span class="text-warning">'+ReplaceArray['Address']+'</span>')
@@ -165,7 +174,7 @@ var investmenForm = function () {
 				.replace("{Date}", '<span class="text-warning">'+ReplaceArray['Date']+'</span>')
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
 				.replace("{Channel}", '<span class="text-warning">'+ChannelsIds[channelSelected]+'</span>')
-				.replace("{Own}", '<span class="text-warning">'+Own+'</span>')
+				.replace("{Own}", '<span class="text-warning">'+OwnContract+'</span>')
 				.replace("{PriceForSubTotal}", '<span class="text-warning">'+totalValContract+'</span>')
 				.replace("{Kr}", '<span class="text-warning">'+ChannelVat+'</span>')
 
@@ -188,6 +197,7 @@ var investmenForm = function () {
 			}
 
 			if(wizard.getStep() == 3){
+				$('.promodiv').hide();
 				totalVal =  $('input[name="initial_investment_'+channelSelected+'"]').val();
 				deleteStep = wizard.getStep();
 				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">

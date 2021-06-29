@@ -44,7 +44,7 @@
 <!--begin::Header Mobile-->
 <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 <!--begin::Logo-->
-<a href="index.html">
+<a href="/dashboard">
 <img alt="Logo" src="<?=$assets?>/media/logos/logo2.png" />
 </a>
 <!--end::Logo-->
@@ -87,7 +87,7 @@
 <!--begin::Brand-->
 <div class="brand flex-column-auto" id="kt_brand">
 <!--begin::Logo-->
-<a href="index.html" class="brand-logo">
+<a href="/dashboard" class="brand-logo">
 <img alt="Logo" src="<?=$assets?>/media/logos/logo2.png"/>
 </a>
 <!--end::Logo-->

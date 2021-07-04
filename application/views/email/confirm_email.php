@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                   <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                   Please click this link to
+                   Please click this link to Activate Your Account
                   </td>
                 </tr>
                 <tr>
@@ -43,10 +43,10 @@
                             
                             <tr>
                               <td style="padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: center;" >
-                                <div align="center"><a href="<?=base_url('auth/reset_password/')?>{forgotten_password_code}"><span style="padding: 3% 12%;
+                                <div align="center"><a href="<?=base_url('activate_account/confirm_email/')?>{forgotten_password_code}"><span style="padding: 3% 12%;
                                 color: white;
                                 background: #3699FF;
-                                border-radius: 3%; cursor: pointer;">Reset Now</span></a></div>
+                                border-radius: 3%; cursor: pointer;">Activate Now</span></a></div>
                               </td>
                             </tr>
                           </table>

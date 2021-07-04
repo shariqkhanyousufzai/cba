@@ -15,6 +15,7 @@ class Auth extends CI_Controller
 		$this->load->database();
 		$this->load->library(['ion_auth', 'form_validation']);
 		$this->load->helper(['url', 'language']);
+		$this->load->helper('string');
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -76,6 +77,11 @@ class Auth extends CI_Controller
 			if ($this->ion_auth->login($email, $password, $remember))
 			{
 				//if the login is successful
+				// sending confirmation email
+				$this->sendActivationEmail($email);
+				
+				// $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, TRUE);
+				// $this->sendEmail($template,$user->email,'Forgot Password');
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				redirect('investor/invest_now', 'refresh');
@@ -109,6 +115,30 @@ class Auth extends CI_Controller
 
 			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'login', $this->data);
 		}
+	}
+
+	public function sendActivationEmail($email = NULL,$user_id = NULL){
+		$code = random_string('alnum', 16);
+		if($user_id != null){
+			$email = $this->session->userdata('email');
+			$data_confirm = [
+			'identity' => $email,
+			'forgotten_password_code' => $code
+			];
+		}else{
+			$data_confirm = [
+			'identity' => $email,
+			'forgotten_password_code' => $code
+			];
+		}
+		$this->ion_auth_model->updateActivationLink($data_confirm);
+		$template = $this->parser->parse('../views/email/confirm_email', $data_confirm,True);
+		send_mail($template,$email,'Account Activation');
+		if($user_id != null){
+			$this->session->set_flashdata('message', 'Email Has Been Send Successfully Check Email');
+			redirect('dashboard'); 
+		}
+
 	}
 	// direct login end
 	/**
@@ -455,6 +485,17 @@ class Auth extends CI_Controller
 			// redirect them to the forgot password page
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
 			redirect("auth/forgot_password", 'refresh');
+		}
+	}
+
+	public function confirm_email($email_link){
+		$confirmEmail = $this->ion_auth_model->ActivateAccount($email_link);
+		if($confirmEmail){
+			$this->session->set_flashdata('message', 'Thankyou Your Account Is Activated!');
+			redirect("dashboard", 'refresh');
+		}else{
+			$this->session->set_flashdata('message', 'Fail To Activate Your Account');
+			redirect("/", 'refresh');
 		}
 	}
 

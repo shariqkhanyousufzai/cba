@@ -113,6 +113,12 @@ $route['promo/active_promo/(:num)'] = 'promo/active_promo/$1';
 $route['promo/applycode'] = 'promo/applycode';
 //reset password
 $route['reset_password'] = 'auth/forgot_password';
+//send activation email
+$route['auth/send_activation_email/(:any)/(:any)'] = 'auth/sendActivationEmail/$1/$2';
+// go to dashboard
+$route['dashboard'] = 'dashboard';
+// activation email
+$route['activate_account/confirm_email/(:any)'] = 'auth/confirm_email/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -201,6 +201,20 @@ if ( ! function_exists('upload_image'))
 // encryption method codeigniter end
 
 
+// get the specific online user 
+if ( ! function_exists('checkAccountActivation'))
+    {
+        function checkAccountActivation(){
+            $CI =& get_instance();
+            $sql = 'SELECT confirm_email from users where id = '.$CI->session->userdata('user_id').'';
+            $query = $CI->db->query($sql);
+            if ($query->num_rows() > 0){
+                return $query->result()[0]->confirm_email;
+            }
+        }
+    }
+// get the specific online user end
+
  //check team members
 if ( ! function_exists('send_mail'))
     { 

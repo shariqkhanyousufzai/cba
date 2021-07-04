@@ -2807,4 +2807,25 @@ class Ion_auth_model extends CI_Model
 			return FALSE;
 		}
 	}
+
+	public function updateActivationLink($data){
+		$this->db->set('confirm_email_link',$data['forgotten_password_code']);
+		$this->db->where('email',$data['identity']);
+		if($this->db->update('users')){
+			return true;
+		}
+		return false;
+
+	}
+
+
+	public function ActivateAccount($email_link){
+		$this->db->set('confirm_email',1);
+		$this->db->where('confirm_email_link',$email_link);
+		if($this->db->update('users')){
+			return true;
+		}
+		return false;
+
+	}
 }

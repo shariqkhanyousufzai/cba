@@ -313,12 +313,29 @@
 	</div>
 
 </div>
+
+
 <!--end::User-->
 </div>
 <!--end::Topbar-->
 </div>
 <!--end::Container-->
 </div>
+
+<!-- activation text -->
+<?php
+	if(checkAccountActivation() == 0){
+?>
+<div class="alert alert-danger" align="center">
+	Please Check Your Email To Activate Your Account! <a href="<?=base_url('auth/send_activation_email/activate/'.$this->session->userdata('user_id'))?>" class="btn btn-dark btn-sm ml-3"> Resend</a>
+</div>
+<?php
+	}
+?>
+
+<!-- activation text end-->
+
+
 <!--end::Header-->
 <script>
   !function(f,b,e,v,n,t,s)

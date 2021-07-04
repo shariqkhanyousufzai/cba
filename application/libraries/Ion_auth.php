@@ -145,6 +145,7 @@ class Ion_auth
 					 ->users()->row();
 
 		if ($user)
+
 		{
 			// Generate code
 			$code = $this->ion_auth_model->forgotten_password($identity);
@@ -158,23 +159,31 @@ class Ion_auth
 
 				if (!$this->config->item('use_ci_email', 'ion_auth'))
 				{
+					$template = $this->parser->parse('../views/email/forgot_password', $data,True);
+					// $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, TRUE);
+					// $this->sendEmail($template,$user->email,'Forgot Password');
+					send_mail($template,$user->email,'Forgot Password');
 					$this->set_message('forgot_password_successful');
 					return $data;
 				}
-				else
+				else 
 				{
-					$message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, TRUE);
-					$this->email->clear();
-					$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-					$this->email->to($user->email);
-					$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
-					$this->email->message($message);
+					$template = $this->parser->parse('../views/email/forgot_password', $data,True);
+					// $this->sendEmail($message,$user->email,'Forgot Password');
+					send_mail($template,$user->email,'Forgot Password');
+					$this->set_message('forgot_password_successful');
+					return TRUE;
+					// $this->email->clear();
+					// $this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
+					// $this->email->to($user->email);
+					// $this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
+					// $this->email->message($message);
 
-					if ($this->email->send())
-					{
-						$this->set_message('forgot_password_successful');
-						return TRUE;
-					}
+					// if ($this->email->send())
+					// {
+						
+					// }
+					
 				}
 			}
 		}

@@ -199,3 +199,56 @@ if ( ! function_exists('upload_image'))
     return $CI->encrypt->decode($string, $key);
 }
 // encryption method codeigniter end
+
+
+ //check team members
+if ( ! function_exists('send_mail'))
+    { 
+        function send_mail($message,$to_email,$subject)
+        {
+            $env = 'development';
+            $CI =& get_instance();
+            if($env == 'development'){
+                $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465, //465
+                'smtp_user' => 'hackbaby1996@gmail.com',
+                'smtp_pass' => 'feb23(1996)',
+                'mailtype' => 'html',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+                );
+
+                // $config = array(
+                //     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+                //     'smtp_host' => 'in-v3.mailjet.com',
+                //     'smtp_port' => 25,
+                //     'smtp_user' => 'a79137cb771f529d726311afc284fcaf', // change it to yours
+                //     'smtp_pass' => '157f1bf5a90c20079c2db0cdadee5dd2' , // change it to yours
+                //     'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+                //     'mailtype' => 'html', //plaintext 'text' mails or 'html'
+                //     'smtp_timeout' => '4', //in seconds
+                //     'charset' => 'UTF-8',
+                //     'wordwrap' => TRUE
+                // );
+                $CI->email->initialize($config);
+                $CI->email->set_newline("\r\n");
+                $CI->email->from('45 Days Challenge');
+                $CI->email->to($to_email);
+                $CI->email->subject($subject);
+                $CI->email->message($message);
+                $CI->email->send();
+            }else{
+                $subject = $subject;
+                $headers = "MIME-Version: 1.0" . "\r\n";
+                $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                // More headers
+                $headers .= 'From: <webmaster@example.com>' . "\r\n";
+
+                mail($to_email,$subject,$message,$headers);
+            }
+            
+        }
+ }

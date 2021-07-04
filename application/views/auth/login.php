@@ -89,6 +89,9 @@ error_reporting(0);
                 <div class="signuptxt" align="right">
                   Don't Have One? <a href="<?=base_url('./signup')?>">Sign Up!</a>
                 </div>
+                <div class="signuptxt" align="right">
+                  <a href="<?=base_url('reset_password')?>">Forgot Password?</a>
+                </div>
                 <div class="pb-lg-0 pb-5" align="right">
                   <button type="submit"  class="themebtn btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
                 </div>

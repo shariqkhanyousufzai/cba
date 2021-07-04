@@ -111,8 +111,8 @@ $route['promo/deactive_promo/(:num)'] = 'promo/deactive_promo/$1';
 $route['promo/active_promo/(:num)'] = 'promo/active_promo/$1';
 // apply code
 $route['promo/applycode'] = 'promo/applycode';
-
-
+//reset password
+$route['reset_password'] = 'auth/forgot_password';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

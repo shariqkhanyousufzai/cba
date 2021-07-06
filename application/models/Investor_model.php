@@ -327,6 +327,13 @@ class Investor_model extends CI_Model
 		}
 	}
 
+	public function checkInfo(){
+		$this->db->select('address,city,country');
+		$this->db->where('id',$this->session->userdata('user_id'));
+		$q = $this->db->get('users');
+		return $q->result()[0];
+	}
+
 	public function deleteInvestment($id){
 		//delete data from payment
 		$this->db->where('id', $id);

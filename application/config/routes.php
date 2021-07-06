@@ -119,6 +119,9 @@ $route['auth/send_activation_email/(:any)/(:any)'] = 'auth/sendActivationEmail/$
 $route['dashboard'] = 'dashboard';
 // activation email
 $route['activate_account/confirm_email/(:any)'] = 'auth/confirm_email/$1';
-
+//fill personal info 
+$route['users/personal_info'] = 'users/user/personal_info';
+//update information
+$route['users/personal_info_update'] = 'users/user/personal_info_update';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

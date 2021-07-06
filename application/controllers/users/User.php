@@ -23,6 +23,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('users/user_model');
+        $this->load->model('investor_model');
         $this->load->library('form_validation');
         
     }
@@ -96,6 +97,25 @@ class User extends CI_Controller {
         }
 	}
 
+	public function personal_info(){
+		$data['getAllUserData'] = $this->investor_model->getAllUserData($this->session->userdata('user_id'));
+		$data['getPayments']['data'] = $this->investor_model->getPayments($type = NULL,$this->session->userdata('user_id'));
+		$this->page_construct('user/personalinfo',$data);
+	}
+
+	public function personal_info_update(){
+		$id = $this->input->post('user_id');
+		$data = array(
+			'full_name' => $this->input->post('full_name'),
+			'address' => $this->input->post('address'),
+			'country' => $this->input->post('country'),
+			'city' => $this->input->post('city'),
+			'zip_code' => $this->input->post('zip'),
+		);
+		$this->user_model->updateUser($data,$id);
+		$this->session->set_flashdata('message', 'Succesfully Updated');
+		redirect('dashboard');
+	}
 
 	function checkAuth(){
 		if (!$this->ion_auth->logged_in())

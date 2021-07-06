@@ -106,7 +106,9 @@
 		<?php
 		if($this->session->userdata('level') != 1){
 		?>
-		<div class=" promodiv">Do You Have Code? <button data-toggle="modal" data-target="#myModalApplyCode" class="btn btn-dark">Apply one now!</button></div>
+		<div class=" promodiv" align="right">
+			<div class="mr-3"><a href="https://cba.as/terms-of-trade/" target="_blank">Terms and Condition</a> | <a href="#" target="_blank">View Contract</a></div>
+		</div>
 
 		<div id="myModalApplyCode" class="modal fade" role="dialog">
 			<div class="modal-dialog">

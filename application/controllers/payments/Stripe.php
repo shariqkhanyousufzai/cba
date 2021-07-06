@@ -60,7 +60,14 @@ class Stripe extends CI_Controller {
 		echo $str;
 		$this->stripe_model->updatePayment($id);
 		$this->investor_model->updateWallet();
-		$this->session->set_flashdata('message', 'Payment Success');
-		redirect('investor/my_investment_list','refresh');
+		$checkInfo = $this->investor_model->checkInfo();
+		if($checkInfo->address == '' || $checkInfo->city == '' || $checkInfo->country == '' ){
+			$this->session->set_flashdata('message', 'Payment Success! Please Fill Your Informtion');
+			redirect('users/personal_info','refresh');
+			
+		}else{
+			$this->session->set_flashdata('message', 'Payment Success');
+			redirect('investor/my_investment_list','refresh');
+		}
 	}
 }

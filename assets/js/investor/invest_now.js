@@ -513,6 +513,13 @@ $(document).ready(function(){
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
 					console.log("Fired purchase pixel not firing old lead track pixel");
 	          		window.location.href = BASEURL+'investor/my_investment_list';
+	          	}else if( response == 'updateinfo'){
+	          		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+					console.log("About to fire purchase pixel");
+					console.log("Amount = " + total_amount_paid);
+					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
+					console.log("Fired purchase pixel not firing old lead track pixel");
+	          		window.location.href = BASEURL+'users/personal_info';
 	          	}
 	          }
 	    })

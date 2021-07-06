@@ -248,7 +248,7 @@ if ( ! function_exists('send_mail'))
                 // );
                 $CI->email->initialize($config);
                 $CI->email->set_newline("\r\n");
-                $CI->email->from('45 Days Challenge');
+                $CI->email->from('Cba');
                 $CI->email->to($to_email);
                 $CI->email->subject($subject);
                 $CI->email->message($message);

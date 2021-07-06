@@ -55,7 +55,6 @@ class Stripe extends CI_Controller {
 			console.log("Amount = "+ "$total_amount");
 			fbq('track', 'Purchase', {currency: "USD", value: "$total_amount"});
 			console.log("Fired purchase pixel not firing old lead track pixel");
-			alert("Thanks for your payment of $" + "$total_amount");
 		</script>
 		MY_MARKER;
 		echo $str;

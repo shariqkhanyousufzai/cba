@@ -593,6 +593,30 @@ class Auth extends CI_Controller
 		}
 		if ($this->form_validation->run() === TRUE && $lastId =  $this->ion_auth->register($identity, $password, $email, $additional_data))
 		{
+			$str = <<<MY_MARKER
+			<script>
+			!function(f,b,e,v,n,t,s)
+			{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+			n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+			if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+			n.queue=[];t=b.createElement(e);t.async=!0;
+			t.src=v;s=b.getElementsByTagName(e)[0];
+			s.parentNode.insertBefore(t,s)}(window, document,'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+			fbq('init', '4282513065100694');
+			fbq('track', 'PageView');
+			</script>
+			<noscript>
+			<img height="1" width="1" style="display:none" 
+				src="https://www.facebook.com/tr?id=4282513065100694&ev=PageView&noscript=1"/>
+			</noscript>
+			<script type="text/javascript">
+				console.log("About to fire reg pixel");
+				fbq('track', 'CompleteRegistration');
+				console.log("Fired reg pixel");
+			</script>
+			MY_MARKER;
+			echo $str;
 			$this->checkValidCode($this->input->post('code'),$lastId);
 			$this->direct_login($identity,$password);
 			// check to see if we are creating the user

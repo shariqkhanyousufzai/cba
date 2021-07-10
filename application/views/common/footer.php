@@ -107,7 +107,7 @@
 		if($this->session->userdata('level') != 1){
 		?>
 		<div class=" promodiv" align="right">
-			<div class="mr-3"><a href="https://cba.as/terms-of-trade/" target="_blank">Terms and Condition</a> | <a href="#" target="_blank">View Contract</a></div>
+			<div class="mr-3"><a href="https://cba.as/terms-of-trade/" target="_blank">Terms and Condition</a> | <a href="<?=$assets?>/contract/contract.pdf" target="_blank">View Contract</a></div>
 		</div>
 
 		<div id="myModalApplyCode" class="modal fade" role="dialog">

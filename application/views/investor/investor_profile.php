@@ -161,11 +161,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Bank</th>
+                                <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
+                                <th>Month/Date/Year</th>
+                                <th>Documents</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -190,7 +190,7 @@
                                     }
                                     ?>
                                 </td>
-                                <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
+                                <td><?= date('M-d-Y',strtotime($getPayment->created_on)) ?></td>
                                 <td>
                                     <button data-target="#detailsmodal_<?=$i?>" data-investment="<?=$getPayment->investment_id?>" data-toggle="modal" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon investment_msg" title="Details">
                                         <span class="svg-icon svg-icon-md">

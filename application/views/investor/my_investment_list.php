@@ -13,18 +13,17 @@
                     <div class="row" style="width: 100%">
                     <div class="card-title" style="width: 100%">
                             <div class="col-sm-6">
-                                <h3 class="card-label">Investment Listing
-                            <span class="d-block text-muted pt-2 font-size-sm">Take Track On Investment</span>
+                                <h3 class="card-label">My Investment
                         </h3>
                             </div>
                             <div class="col-sm-2" align="right">Status: </div>
-                            <div class="col-sm-4">
+                            <!-- <div class="col-sm-4">
                                 <select class="form-control status">
                                     <option value="">All</option>
                                     <option value="pending">Pending</option>
                                     <option value="completed">Completed</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -38,11 +37,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Bank</th>
+                                <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
+                                <th>Month/Date/Year</th>
+                                <th>Documents</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,7 +66,7 @@
                                     }
                                     ?>
                                 </td>
-                                <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
+                                <td><?= date('M-d-Y',strtotime($getPayment->created_on)) ?></td>
                                 <td>
                                     <?php
                                     if($getPayment->status == 0){
@@ -82,7 +81,7 @@
                                     ?>
                                     <a href="<?php echo base_url('investor/view_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon actionsbtn" title="Pay Now">
                                         <span class="svg-icon svg-icon-md">
-                                            <i class="flaticon-eye"></i>
+                                            <i class="flaticon-doc"></i>
                                         </span>
                                     </a>
                                     <?php

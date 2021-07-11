@@ -52,7 +52,7 @@
                             <tr>
                                 <td><?= $i ?></td>
                                 <td><?= $getPayment->bank?></td>
-                                <td>$<?= round($getPayment->total_investment,2) ?></td>
+                                <td><?= asDollars(round($getPayment->total_investment)) ?></td>
                                 <td>
                                     <?php
                                     if($getPayment->status == 0){

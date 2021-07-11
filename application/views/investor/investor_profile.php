@@ -176,7 +176,7 @@
                             <tr>
                                 <td><?= $i ?></td>
                                 <td><?= $getPayment->bank?></td>
-                                <td><?= round($getPayment->total_investment,2) ?></td>
+                                <td><?= asDollars($getPayment->total_investment) ?></td>
                                 <td>
                                     <?php
                                     if($getPayment->status == 0){
@@ -324,7 +324,7 @@ foreach ($getPayments['data']['data'] as $getPayment) {
                         <tr>
                             <td><?=$getPayment->name?></td>
                             <td><?=$getPayment->bank?></td>
-                            <td><?=round($getPayment->total_investment,2)?></td>
+                            <td><?=asDollars($getPayment->total_investment)?></td>
                             <td>
                                 <?php
                                 if($getPayment->status == 0){

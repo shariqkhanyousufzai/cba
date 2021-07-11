@@ -14,6 +14,14 @@ if ( ! function_exists('offline'))
         }
     }
 
+    if ( ! function_exists('asDollars'))
+    {
+        function asDollars($value) {
+            if ($value<0) return "-".asDollars(-$value);
+            return '$' . number_format($value, 2);
+        }
+    }
+
 
 // get the specific online user 
 if ( ! function_exists('getSpecificOnlineUser'))

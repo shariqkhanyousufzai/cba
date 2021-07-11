@@ -202,7 +202,7 @@
                                             <i class="flaticon-doc"></i>
                                         </span>
                                     </button>
-                                    <button data-target="#contractinvoice_<?=$i?>" data-toggle="modal" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Contract">
+                                    <button data-target="#contractinvoice_<?=$i?>" data-toggle="modal" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Invoice">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="flaticon-graphic-1"></i>
                                         </span>

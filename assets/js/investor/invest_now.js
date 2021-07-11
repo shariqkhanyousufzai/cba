@@ -64,8 +64,10 @@ var investmenForm = function () {
 						});
 					return false;
 				}else if( parseInt($('input[name="initial_investment_'+checkChannel[0]+'"]').val()) >= parseInt(walletAmount)){
-					console.log("About to fire add to cart");
+					console.log("Firing add to cart pixel");
 					fbq('track', 'AddToCart', {});	
+					console.log("Firing InitiateCheckoutpixel");
+					fbq('track', 'InitiateCheckout');
 					return true;
 				}else{
 						Swal.fire({

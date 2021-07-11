@@ -368,9 +368,9 @@
         Date  : '<?=date('m-d-Y')?>',
         Login_name  : '<?=$user->full_name?>',
     }
-    console.log("About to fire view product pixel");
+    console.log("About to fire ViewContent pixel");
     fbq('track', 'ViewContent', {});
-    console.log("Fired view product pixel");
+    console.log("Fired ViewContent pixel");
 
 </script>
 <script src="<?=$assets?>/js/investor/invest_now.js"></script>

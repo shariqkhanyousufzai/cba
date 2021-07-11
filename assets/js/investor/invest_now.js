@@ -670,18 +670,21 @@ $(document).ready(function(){
     	var getVal = $(this).val();
     	console.log(getVal);
     	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
+		$('.initial_investment_txt_words').html(numToWords(parseInt(getVal)));
     });
 
     $(document).on('keyup','input[name="initial_investment_music"]',function(){
     	var getVal = $(this).val();
     	console.log(getVal);
     	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
+		$('.initial_investment_txt_words').html(numToWords(parseInt(getVal)));
     });
 
     $(document).on('keyup','input[name="initial_investment_sport"]',function(){
     	var getVal = $(this).val();
     	console.log(getVal);
     	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
+		$('.initial_investment_txt_words').html(numToWords(parseInt(getVal)));
     });
 
     

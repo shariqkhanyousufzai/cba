@@ -152,9 +152,12 @@ var investmenForm = function () {
 					$('.hidepayments').show();
 				}
 
-				var totaltxt =  parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt($('#mywallet').html());
-				$('.wallet_txt').html('- $'+$('#mywallet').html());
-				$('.channelnametxt').html(channelSelected);
+				var walletAmount = $('#mywallet').html();
+				var walletAmountRes = walletAmount.replace("$",'');
+				var totaltxt = asDollars(parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseFloat(walletAmountRes));
+
+				$('.wallet_txt').html('$'+asDollars(parseFloat(walletAmountRes)));
+				$('.channelnametxt').html('$'+asDollars(channelSelected));
 				$('.investmenttxt').html('$'+$('input[name="initial_investment_'+channelSelected+'"]').val());
 				$('.totaltxt').html('$'+totaltxt);
 				var getContract = $('.contract').html();
@@ -165,7 +168,7 @@ var investmenForm = function () {
 				}else if(channelSelected == 'food'){
 					share = food_cost_per_share;
 				}
-				var OwnContract = Math.round((parseInt(totaltxt) * 100)/parseInt(share))+'%';
+				var OwnContract = (parseFloat(totaltxt) * 100)/parseFloat(share)+'%';
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
 				.replace("{Address}", '<span class="text-warning">'+ReplaceArray['Address']+'</span>')
@@ -498,12 +501,14 @@ $(document).ready(function(){
 	$(document).on('click','.paymentBtn',function(e){
 		e.preventDefault();
 		var getPaymentMethod = $(this).data('type');
+		var invoiceDetails = $('.invoicedetails').html();
 		$.ajax({
 	          url:BASEURL+"investor/update_payment_method",
 	          method: 'post',
 	          data: {
 	          	getPaymentMethod : getPaymentMethod,
-	          	lastPaymentId : lastPaymentId
+	          	lastPaymentId : lastPaymentId,
+	          	invoiceDetails : invoiceDetails
 	          },
 	          dataType: "json",
 	          success: function( response ) {
@@ -530,12 +535,14 @@ $(document).ready(function(){
 	$(document).on('click','.paymentBtnWallet',function(e){
 		e.preventDefault();
 		var getPaymentMethod = $(this).data('type');
+		var invoiceDetails = $('.invoicedetails').html();
 		$.ajax({
 	          url:BASEURL+"investor/update_payment_method",
 	          method: 'post',
 	          data: {
 	          	getPaymentMethod : getPaymentMethod,
-	          	lastPaymentId : lastPaymentId
+	          	lastPaymentId : lastPaymentId,
+	          	invoiceDetails : invoiceDetails
 	          },
 	          dataType: "json",
 	          success: function( response ) {
@@ -598,12 +605,14 @@ $(document).ready(function(){
 					$('#createInvesterFormDetails').submit();
 				}
 			 });
+ 			var invoiceDetails = $('.invoicedetails').html();
  			$.ajax({
  				url:BASEURL+"investor/update_payment_method",
  				method: 'post',
  				data: {
  					getPaymentMethod : 'PAYPAL',
- 					lastPaymentId : lastPaymentId
+ 					lastPaymentId : lastPaymentId,
+ 					invoiceDetails : invoiceDetails
  				},
  				dataType: "json",
  				success: function( response ) {
@@ -654,6 +663,25 @@ $(document).ready(function(){
         .catch(function (error) {
           console.error("Error:", error);
         });
+    });
+
+   
+    $(document).on('keyup','input[name="initial_investment_food"]',function(){
+    	var getVal = $(this).val();
+    	console.log(getVal);
+    	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
+    });
+
+    $(document).on('keyup','input[name="initial_investment_music"]',function(){
+    	var getVal = $(this).val();
+    	console.log(getVal);
+    	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
+    });
+
+    $(document).on('keyup','input[name="initial_investment_sport"]',function(){
+    	var getVal = $(this).val();
+    	console.log(getVal);
+    	$('.initial_investment_txt').html('$' +asDollars(parseInt(getVal)));
     });
 
     

@@ -202,6 +202,11 @@
                                             <i class="flaticon-doc"></i>
                                         </span>
                                     </button>
+                                    <button data-target="#contractinvoice_<?=$i?>" data-toggle="modal" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Contract">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon-graphic-1"></i>
+                                        </span>
+                                    </button>
                                 </td>
                             </tr>
                             <?php
@@ -291,6 +296,24 @@ foreach ($getPayments['data']['data'] as $getPayment) {
                 <div class="contract">
                     <?=$getPayment->contract?>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="contractinvoice_<?=$k?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 866px!important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Invoice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?=$getPayment->invoice?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>

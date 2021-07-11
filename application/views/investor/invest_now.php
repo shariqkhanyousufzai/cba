@@ -92,8 +92,11 @@
                                                </div>
                                                <div class="col-sm-7">
                                                    <div class="row">
-                                                       <div class="col-sm-12">
+                                                       <div class="col-sm-7">
                                                            <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_music"></label>
+                                                       </div>
+                                                       <div class="col-sm-5 initial_investment_txt" style="line-height: 116px;    margin-left: -28px;">
+                                                         
                                                        </div>
                                                        <div class="col-sm-12">
                                                          <div class="row recur_disable">
@@ -129,8 +132,11 @@
                                                    </div>
                                                    <div class="col-sm-7">
                                                    <div class="row">
-                                                       <div class="col-sm-12">
+                                                       <div class="col-sm-7">
                                                            <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_food"></label>
+                                                       </div>
+                                                       <div class="col-sm-5 initial_investment_txt" style="line-height: 116px;    margin-left: -28px;">
+                                                         
                                                        </div>
                                                        <div class="col-sm-12">
                                                          <div class="row recur_disable">
@@ -167,8 +173,11 @@
                                             </div>
                                             <div class="col-sm-7">
                                                    <div class="row">
-                                                       <div class="col-sm-12">
+                                                       <div class="col-sm-7">
                                                            <label>Initail Investment ($): <input class="form-control initialinvestment" min="10" type="number" name="initial_investment_sport"></label>
+                                                       </div>
+                                                       <div class="col-sm-5 initial_investment_txt" style="line-height: 116px;    margin-left: -28px;">
+                                                         
                                                        </div>
                                                        <div class="col-sm-12">
                                                          <div class="row recur_disable">
@@ -219,7 +228,7 @@
                             <div class="row">
                               <div class="col-sm-12">
                                   <div class="row" align="center">
-                                    <div class="col-sm-6" style="margin: 0 auto">
+                                    <div class="col-sm-6 invoicedetails" style="margin: 0 auto">
                                   <div>
                                     <h4>Payment Details: </h4>
                                   </div>

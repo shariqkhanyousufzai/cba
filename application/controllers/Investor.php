@@ -185,7 +185,7 @@ class Investor extends CI_Controller {
 	}
 
 	public function update_payment_method(){
-		$res = $this->investor_model->updatePayment($_POST['lastPaymentId'],$_POST['getPaymentMethod']);
+		$res = $this->investor_model->updatePayment($_POST['lastPaymentId'],$_POST['getPaymentMethod'],$_POST['invoiceDetails']);
 		$this->investor_model->updateWallet();
 		$checkInfo = $this->investor_model->checkInfo();
 		if($checkInfo->address == '' || $checkInfo->city == '' || $checkInfo->country == '' ){

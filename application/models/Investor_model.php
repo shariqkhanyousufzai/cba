@@ -146,7 +146,7 @@ class Investor_model extends CI_Model
 		}
 	}
 
-	public function updatePayment($lastPaymentId,$getPaymentMethod){
+	public function updatePayment($lastPaymentId,$getPaymentMethod,$invoiceDetails){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
@@ -154,6 +154,7 @@ class Investor_model extends CI_Model
 			if($getPaymentMethod == 'Wallet'){
 			$this->db->set('status',1);
 			}
+			$this->db->set('invoice',$invoiceDetails);
 			$this->db->set('bank',$getPaymentMethod);
 			$this->db->where('id',$lastPaymentId);
 			if($this->db->update('payments')){
@@ -219,7 +220,7 @@ class Investor_model extends CI_Model
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status');
+			$this->db->select('c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status,p.invoice');
 			$this->db->from('investments i');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');
 			$this->db->join('payments p','i.payment_id = p.id','LEFT');

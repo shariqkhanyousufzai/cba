@@ -634,7 +634,9 @@ $(document).ready(function(){
 	//stripe sca
 // Create an instance of the Stripe object with your publishable API key
     //var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
-	var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
+	//var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa")
+//    var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
+ var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
     var checkoutButton = document.getElementById("checkout-button");
 
     checkoutButton.addEventListener("click", function () {

@@ -143,6 +143,9 @@ var investmenForm = function () {
 			var totalValContract = $('input[name="initial_investment_'+channelSelected+'"]').val();
 			ChannelReplace += '</ol>';
 			if(wizard.getStep() == 3){
+				var walletAmount = $('#mywallet').html().replace("$", "");
+				var walletAmountRes = walletAmount.replace("$",'');
+				var totaltxt = asDollars(parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseFloat(walletAmountRes));
 				if((parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt(walletAmount)) == 0){
 					$('.showwallet').show();
 					$('.hidepayments').hide();
@@ -152,9 +155,7 @@ var investmenForm = function () {
 					$('.hidepayments').show();
 				}
 
-				var walletAmount = $('#mywallet').html().replace("$", "");
-				var walletAmountRes = walletAmount.replace("$",'');
-				var totaltxt = asDollars(parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseFloat(walletAmountRes));
+				
 
 				$('.wallet_txt').html('$'+asDollars(parseFloat(walletAmountRes)));
 				$('.channelnametxt').html(channelSelected);
@@ -632,8 +633,8 @@ $(document).ready(function(){
 $(document).ready(function(){
 	//stripe sca
 // Create an instance of the Stripe object with your publishable API key
-    var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
-	// var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
+    //var stripe = Stripe("pk_test_51HgCEqGBlKCKevlC3VAgXGzdcE7grNHEb5ay7FRF1qrBCgvm7Ggo5JnGleSDTnC84Ik6vdv4W737l2g6f2Rm7bji00ic4lYm91");
+	var stripe = Stripe("pk_live_51HgCEqGBlKCKevlCVy3tjEch8pnrQgOixqhAsf4JCVnoGUSo9s5WkJRJHHO5kSIwjzIYy5ifnvxbjLnkj5PyzcRy00Js8dyNsa");
     var checkoutButton = document.getElementById("checkout-button");
 
     checkoutButton.addEventListener("click", function () {

@@ -103,6 +103,7 @@ class Investor extends CI_Controller {
 		$payment_data = array(
 			'created_by' => $this->session->userdata('user_id'),
 			'total_investment' => $this->input->post('total_investment'),
+			'wallet_amount' => $this->input->post('wallet')
 		);
 		$payment_id = $this->investor_model->addPayment($payment_data);
 

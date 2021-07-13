@@ -152,13 +152,13 @@ var investmenForm = function () {
 					$('.hidepayments').show();
 				}
 
-				var walletAmount = $('#mywallet').html();
+				var walletAmount = $('#mywallet').html().replace("$", "");
 				var walletAmountRes = walletAmount.replace("$",'');
 				var totaltxt = asDollars(parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseFloat(walletAmountRes));
 
 				$('.wallet_txt').html('$'+asDollars(parseFloat(walletAmountRes)));
 				$('.channelnametxt').html(channelSelected);
-				$('.investmenttxt').html('$'+$('input[name="initial_investment_'+channelSelected+'"]').val());
+				$('.investmenttxt').html('$'+asDollars($('input[name="initial_investment_'+channelSelected+'"]').val()));
 				$('.totaltxt').html('$'+totaltxt);
 				var getContract = $('.contract').html();
 				if(channelSelected == 'music'){
@@ -205,6 +205,7 @@ var investmenForm = function () {
 			if(wizard.getStep() == 3){
 				$('.promodiv').hide();
 				totalVal =  $('input[name="initial_investment_'+channelSelected+'"]').val();
+				var wallet_amount = parseInt($('#mywallet').html().replace("$", ""));
 				deleteStep = wizard.getStep();
 				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
@@ -213,7 +214,7 @@ var investmenForm = function () {
 				$.ajax({
 			          url:BASEURL+"investor/add_investment_single",
 			          method: 'post',
-			          data: $('#investmenForm').serialize(),
+			          data: $('#investmenForm').serialize()+"&wallet="+wallet_amount,
 			          dataType: "json",
 			          success: function( response ) {
 			          	lastPaymentId = response;
@@ -514,14 +515,14 @@ $(document).ready(function(){
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
 	          		// location.reload();	
-				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
 					console.log("Fired purchase pixel not firing old lead track pixel");
 	          		window.location.href = BASEURL+'investor/my_investment_list';
 	          	}else if( response == 'updateinfo'){
-	          		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+	          		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
@@ -547,7 +548,7 @@ $(document).ready(function(){
 	          dataType: "json",
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
-					var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+					var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
@@ -574,7 +575,7 @@ $(document).ready(function(){
  		return actions.order.create({
  			purchase_units: [{
  				amount: {
- 					value:  parseInt($('.total_investment').val()) - parseInt($('#mywallet').html()),
+ 					value:  parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", "")),
  				}
  			}]
  		});
@@ -637,7 +638,7 @@ $(document).ready(function(){
 
     checkoutButton.addEventListener("click", function () {
     	var fd = new FormData();
-		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html());
+		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", "") );
 		fd.append('total', total_amount_paid);
 		fd.append('payment_id', lastPaymentId);
 		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId + "/" + total_amount_paid);

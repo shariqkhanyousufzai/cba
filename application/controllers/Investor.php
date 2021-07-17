@@ -189,13 +189,15 @@ class Investor extends CI_Controller {
 		$res = $this->investor_model->updatePayment($_POST['lastPaymentId'],$_POST['getPaymentMethod'],$_POST['invoiceDetails']);
 		$this->investor_model->updateWallet();
 		$checkInfo = $this->investor_model->checkInfo();
-		if($checkInfo->address == '' || $checkInfo->city == '' || $checkInfo->country == '' ){
-			$this->session->set_flashdata('message', 'Payment Success! Please Fill Your Informtion');
-			echo json_encode("updateinfo");
-		}else{
-			$this->session->set_flashdata('message', 'Request Has Been Send!');
-			echo json_encode($res);
-		}
+		// if($checkInfo->address == '' || $checkInfo->city == '' || $checkInfo->country == '' ){
+		// 	$this->session->set_flashdata('message', 'Payment Success! Please Fill Your Informtion');
+		// 	echo json_encode("updateinfo");
+		// }else{
+		// 	$this->session->set_flashdata('message', 'Request Has Been Send!');
+		// 	echo json_encode($res);
+		// }
+		$this->session->set_flashdata('message', 'Request Has Been Send!');
+		echo json_encode($res);
 	}
 
 	public function delete_investment(){

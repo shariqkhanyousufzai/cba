@@ -514,6 +514,7 @@ $(document).ready(function(){
 	          },
 	          dataType: "json",
 	          success: function( response ) {
+	          	console.log(response);
 	          	if( response.msg == 'success'){
 	          		// location.reload();	
 				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));

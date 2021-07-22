@@ -297,11 +297,11 @@
                                     <div class="col-sm-4"></div>
                                   </div>
                                 </div>
-                                <div class="col-sm-6 hidepayments" style="display: none;">
-                                    <div class="mt-2 mb-2 paymentcards">
+                                <div class="col-sm-3 hidepayments" style="display: none;">
+                                    <!-- <div class="mt-2 mb-2 paymentcards">
                                         <h4 class="mb-5 font-weight-bold text-dark">Direct Bank Transfer: </h4>
                                         <button type="button" class="paymentBtn btn font-weight-bold btn-primary form-control" data-type="Direct Bank Transfer">Bank Transfer</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-sm-6 hidepayments" style="display: none;">
                                     <div class="mt-2 mb-2 paymentcards">
@@ -309,6 +309,7 @@
                                         <div class="mt-4" id="paypal-button-container"> </div>
                                     </div>
                                 </div>
+                                <div class="3"></div>
                                 <div class="col-sm-4" style="display: none;visibility: hidden;">
                                     <div class="mt-2 mb-2 paymentcards" style="display: none;">
                                         <h4 class="mb-5 font-weight-bold text-dark">Pay Through Stripe: </h4>

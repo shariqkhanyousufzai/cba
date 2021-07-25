@@ -16,7 +16,7 @@
                                 <h3 class="card-label">My Investment
                         </h3>
                             </div>
-                            <div class="col-sm-2" align="right">Status: </div>
+                            <!-- <div class="col-sm-2" align="right">Status: </div> -->
                             <!-- <div class="col-sm-4">
                                 <select class="form-control status">
                                     <option value="">All</option>
@@ -79,7 +79,7 @@
                                     <?php
                                     }else{
                                     ?>
-                                    <a href="<?php echo base_url('investor/view_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon actionsbtn" title="Pay Now">
+                                    <a href="<?php echo base_url('investor/view_investment/'.$getPayment->id); ?>" class="btn btn-md w-lg-100 btn-dark btn-icon actionsbtn" title="Contract">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="flaticon-doc"></i>
                                         </span>

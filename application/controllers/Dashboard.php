@@ -23,6 +23,7 @@ class Dashboard extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('dashboard_model');
+        $this->load->model('investor_model');
         if (!$this->ion_auth->logged_in())
 			{            
 			$this->session->set_userdata('requested_page', $this->uri->uri_string());
@@ -58,6 +59,7 @@ class Dashboard extends CI_Controller {
 		$this->data['pending_investment'] = $this->dashboard_model->pendingInvestment();
 		$this->data['completed_investment'] = $this->dashboard_model->completedInvestment();
 		$this->data['data_channels'] = $data_channels;	
+		$this->data['getPayments']['data'] = $this->investor_model->getPayments($type = NULL,$this->session->userdata('user_id'));
 		$this->page_construct('dashboard',$this->data);
 	}
 }

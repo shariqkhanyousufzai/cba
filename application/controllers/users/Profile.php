@@ -55,6 +55,10 @@ class Profile extends CI_Controller {
 		$update_data = array(
 			'first_name' => $_POST['first_name'],
 			'last_name' => $_POST['last_name'],
+			'address' => $_POST['address'],
+			'country' => $_POST['country'],
+			'city' => $_POST['city'],
+			'zip_code' => $_POST['zip_code'],
 			'avatar' => $avatar_name,
 		);
 		if($this->profile_model->updateUser($update_data)){

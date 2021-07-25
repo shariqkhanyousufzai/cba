@@ -618,6 +618,7 @@ class Auth extends CI_Controller
 			MY_MARKER;
 			echo $str;
 			$this->checkValidCode($this->input->post('code'),$lastId);
+			sendinblue_addcontact($identity);
 			$this->direct_login($identity,$password);
 			// check to see if we are creating the user
 			// redirect them back to the admin page 

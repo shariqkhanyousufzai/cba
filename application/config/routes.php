@@ -123,5 +123,7 @@ $route['activate_account/confirm_email/(:any)'] = 'auth/confirm_email/$1';
 $route['users/personal_info'] = 'users/user/personal_info';
 //update information
 $route['users/personal_info_update'] = 'users/user/personal_info_update';
+// add email to sendinblue
+$route['api/sendinblue/add_contact'] = 'api/sendinblue/api/add_contact';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

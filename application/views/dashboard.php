@@ -13,6 +13,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 				<div class="d-flex align-items-baseline flex-wrap mr-5">
 					<!--begin::Page Title-->
 					<h5 class="text-dark font-weight-bold my-1 mr-5">Dashboard </h5>
+					<button class="btn btn-info sendinbluecontact" data-email="alisa@gmail.com">Send In Blue</button>
 					<!--end::Page Title-->
 				</div>
 				<!--end::Page Heading-->
@@ -203,6 +204,117 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 				</div>
 				<!--end::Stats Widget 2-->
 			</div>
+			<?php
+			if($this->session->userdata('group_name') == 'investor'){
+			?>
+			<div class="col-sm-12 ">
+				<div class="card card-custom card-stretch gutter-b">
+						<!--begin::Header-->
+						<div class="card-header border-0 pt-6">
+							<h3 class="card-title">
+								<span class="card-label font-weight-bolder font-size-h4 text-dark-75">My Investment</span>
+							</h3>
+						</div>
+						<!--end::Header-->
+						<!--begin::Body-->
+						<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
+							<div class="row">
+                                <div class="col-sm-6">
+                                    <h4>Investment Status </h4>
+                                    <div id="chart_12"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4>Investment Channel </h4>
+                                    <div id="chart_13"></div>
+                                </div>
+                                <div class="col-sm-12" align="center">
+                                    <h4>Last Investment</h4>
+                                    <div id="chart_3"></div>
+                                </div>
+                            </div>
+						</div>
+					<!--end::Body-->
+				</div>
+				
+			</div>
+			
+			<div class="col-sm-12 ">
+				<div class="card card-custom card-stretch gutter-b">
+						<!--begin::Header-->
+						<div class="card-header border-0 pt-6">
+							<h3 class="card-title">
+								<span class="card-label font-weight-bolder font-size-h4 text-dark-75">My Investment</span>
+							</h3>
+						</div>
+						<!--end::Header-->
+						<!--begin::Body-->
+						<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
+							<table class="table table-bordered table-checkable" id="example">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Payment Method</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Month/Date/Year</th>
+                                <th>Documents</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($getPayments['data']['data'] as $getPayment) {
+                            ?> 
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $getPayment->bank?></td>
+                                <td><?= asDollars($getPayment->total_investment) ?></td>
+                                <td>
+                                    <?php
+                                    if($getPayment->status == 0){
+                                    ?>
+                                    <span class="badge badge-warning"> Pending </span>
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <span class="badge badge-success"> Completed </span>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
+                                <td><?= date('M-d-Y',strtotime($getPayment->created_on)) ?></td>
+                                <td>
+                                    <button style="width: 30%!important;display: inline-block;float: left;" data-target="#detailsmodal_<?=$i?>" data-investment="<?=$getPayment->investment_id?>" data-toggle="modal" class="btn mt-2 btn-md w-lg-100 btn-dark btn-icon investment_msg" title="Details">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon2-information"></i>
+                                        </span>
+                                    </button>
+                                    <button style="width: 30%!important;display: inline-block;float: left;" data-target="#contractmodal_<?=$i?>" data-toggle="modal" class="btn mt-2 ml-1 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Contract">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon-doc"></i>
+                                        </span>
+                                    </button>
+                                    <button style="width: 30%!important;display: inline-block;float: left;" data-target="#contractinvoice_<?=$i?>" data-toggle="modal" class="btn mt-2 ml-1 btn-md w-lg-100 btn-dark btn-icon send_msg" title="Invoice">
+                                        <span class="svg-icon svg-icon-md">
+                                            <i class="flaticon-graphic-1"></i>
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php
+                            $i++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+						</div>
+					<!--end::Body-->
+				</div>
+				
+			</div>
+			<?php
+			}
+			?>
 		</div>
 		<!--end::Row-->
 		<!--end::Dashboard-->
@@ -241,3 +353,197 @@ jQuery('.totalsubs').html(GetTotalSubscriber);
 jQuery('.totalviews').html(GetTotalViews);
 </script>
 <script type="text/javascript" src="<?=$assets?>/js/dashboard/dashboard.js"></script>
+<?php
+$k = 1;
+$totalcompleted = 0;
+$totalpending = 0;
+
+$investment_tot = [];
+
+$investment_channel_music = 0;
+$investment_channel_sport = 0;
+$investment_channel_food = 0;
+
+foreach ($getPayments['data']['data'] as $getPayment) {
+    if($getPayment->status != 0){
+    $totalcompleted += $getPayment->total_investment;
+    }else{
+    $totalpending += $getPayment->total_investment;
+    }
+    $investment_tot[$k]['total'] = $getPayment->total_investment;
+    $investment_tot[$k]['date'] = date('Y-M-d',strtotime($getPayment->created_on));
+    if($getPayment->name == 'music' && $getPayment->status != 0){
+        $investment_channel_music += $getPayment->total_investment;
+    }else if($getPayment->name == 'sport' && $getPayment->status != 0){
+        $investment_channel_sport += $getPayment->total_investment;
+    }else if($getPayment->name == 'food' && $getPayment->status != 0){
+        $investment_channel_food += $getPayment->total_investment;
+    }
+
+?> 
+<!-- Modal-->
+<div class="modal fade" id="contractmodal_<?=$k?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 866px!important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contract</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="contract">
+                    <?=$getPayment->contract?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="contractinvoice_<?=$k?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 866px!important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Invoice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?=$getPayment->invoice?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- message modal end-->
+<!-- Modal-->
+<div class="modal fade" id="detailsmodal_<?=$k?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 866px!important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contract</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-checkable">
+                    <thead>
+                            <tr>
+                                <th>Channel Name</th>
+                                <th>Bank</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?=$getPayment->name?></td>
+                            <td><?=$getPayment->bank?></td>
+                            <td><?=asDollars($getPayment->total_investment)?></td>
+                            <td>
+                                <?php
+                                if($getPayment->status == 0){
+                                ?>
+                                <span class="badge badge-warning"> Pending </span>
+                                <?php
+                                }else{
+                                ?>
+                                <span class="badge badge-success"> Completed </span>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td><?= date('Y-M-d',strtotime($getPayment->created_on)) ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <h4>Comments</h4>
+                    <table class="table">
+                    <thead align="center">
+                        <th>s.no</th>
+                        <th>Comments</th>
+                        <th>Created</th>
+                    </thead>
+                    <tbody class="msgsdiv" align="center">
+                        
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- message modal end-->
+<?php
+$k++;
+}
+?> 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(document).on('click','.investment_msg',function(){
+            $.ajax({
+                url : '<?=base_url("investor/getmsg")?>',
+                method : 'POST',
+                data : {
+                    getTheId : $(this).data('investment')
+                },
+                dataType: "json",
+                success: function( response ) {
+                var data = response.data;
+                if(data != ''){
+                   var HTML = `<tr>`;
+                    for(i in data){
+                        HTML += `
+                                <td>${parseInt(i) + 1}</td>
+                                <td>${data[i].comment}</td>
+                                <td>${data[i].created_on}</td>
+                                `
+                    }
+                    HTML += `</tr>`;
+                    $('.msgsdiv').html(HTML); 
+                }else{
+                     $('.msgsdiv').html('<tr><td></td><td>No data found</td><td></td></tr>'); 
+                }
+            }
+            });
+        });
+    });
+
+    // FOR STATUS CHART
+    var status_count = [parseInt('<?=$totalcompleted?>'),parseInt('<?=$totalpending?>')];
+    var status_label = ['COMPLETED','PENDING'];
+    // FOR STATUS CHART END
+
+    // FOR CHANNEL CHART
+    var channel_count = [parseInt('<?=$investment_channel_music?>'),parseInt('<?=$investment_channel_food?>'),parseInt('<?=$investment_channel_sport?>')];
+    var channel_label = ['MUSIC','FOOD','SPORT'];
+    // FOR CHANNEL CHART END
+    
+    // FOR STATUS BAR CHART
+    var investment_tot = [];
+    var investment_date = [];
+    <?php
+
+    foreach ($investment_tot as $investment_tote) {
+    ?>
+        investment_tot.push(parseInt('<?=$investment_tote["total"]?>'));
+        investment_date.push('<?=$investment_tote["date"]?>');
+    <?php
+    }
+    ?>
+    console.log(investment_tot);
+    // FOR STATUS BAR CHART END
+
+</script>
+<script type="text/javascript" src="<?=$assets?>/js/investor/investor_profile.js"></script>

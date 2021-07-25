@@ -244,10 +244,10 @@ if ( ! function_exists('send_mail'))
 
                 $config = array(
                     'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-                    'smtp_host' => 'in-v3.mailjet.com',
-                    'smtp_port' => 25,
-                    'smtp_user' => 'a79137cb771f529d726311afc284fcaf', // change it to yours
-                    'smtp_pass' => '157f1bf5a90c20079c2db0cdadee5dd2' , // change it to yours
+                    'smtp_host' => 'smtp-relay.sendinblue.com',
+                    'smtp_port' => 587,
+                    'smtp_user' => 'ses@cba.as', // change it to yours
+                    'smtp_pass' => '5mdOaUIcpV4jJPzh' , // change it to yours
                     'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
                     'mailtype' => 'html', //plaintext 'text' mails or 'html'
                     'smtp_timeout' => '4', //in seconds
@@ -256,11 +256,18 @@ if ( ! function_exists('send_mail'))
                 );
                 $CI->email->initialize($config);
                 $CI->email->set_newline("\r\n");
-                $CI->email->from('Cba');
+                $CI->email->from('info@cba.as');
                 $CI->email->to($to_email);
                 $CI->email->subject($subject);
                 $CI->email->message($message);
                 $CI->email->send();
+                // if($CI->email->send()){
+                //     echo "string";
+                //     exit();
+                // }else{
+                //     print_r($CI->email->print_debugger());
+                //     exit();
+                // }
             }else{
                 $subject = $subject;
                 $headers = "MIME-Version: 1.0" . "\r\n";
@@ -274,3 +281,29 @@ if ( ! function_exists('send_mail'))
             
         }
  }
+
+ if ( ! function_exists('sendinblue_addcontact'))
+ { 
+    function sendinblue_addcontact($email)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.sendinblue.com/v3/contacts',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>'{"email": "'.$email.'"}',
+            CURLOPT_HTTPHEADER => array(
+                'content-type: application/json',
+                'api-key: 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'
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+    }
+}

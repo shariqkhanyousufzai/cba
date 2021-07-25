@@ -13,7 +13,7 @@
                 <!--end::Separator-->
             </div>
             <!--end::Details-->
-        </div>
+        </div> 
     </div>
     <!--end::Subheader-->
     <!--begin::Entry-->
@@ -90,7 +90,7 @@
                                 <div class="col-xl-7 my-2">
                                     <!--begin::Group-->
                                     <form class="form" id="kt_form" method="post" action="<?php echo base_url('users/profile_update'); ?>" enctype="multipart/form-data">
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                             <label class="col-form-label col-3 text-lg-right text-left">Photo</label>
                                             <div class="col-9">
                                                 <div class="image-input image-input-empty image-input-outline" id="kt_user_edit_avatar" style="background-image: url(<?php echo base_url('assets/uploads/' . $user->avatar); ?>)">
@@ -108,38 +108,38 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        
                                         <!--end::Group-->
-
                                         <!--begin::Group-->
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-3 text-lg-right text-left">First Name</label>
-                                            <div class="col-9">
-                                                <input class="form-control form-control-lg form-control-solid" type="text" value="<?php echo $user->first_name ?>" name="first_name" />
+                                        <div class="row">
+                                            <div class="col-sm-6 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>First Name:</label>
+                                                <input type="text" class="form-control"   name="first_name" value="<?php echo $user->first_name; ?>">
+                                            </div>
+                                            <div class="col-sm-6 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>Last Name:</label>
+                                                <input type="text" class="form-control"   name="last_name" value="<?php echo $user->last_name; ?>">
                                             </div>
                                         </div>
-                                        <!--end::Group-->
-                                        <!--begin::Group-->
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-3 text-lg-right text-left">Last Name</label>
-                                            <div class="col-9">
-                                                <input class="form-control form-control-lg form-control-solid" type="text" value="<?php echo $user->last_name ?>" name="last_name" />
+                                        <div class="row">
+                                            <div class="col-sm-12 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>Address:</label>
+                                                <input type="text" class="form-control"   name="address" value="<?php echo $user->address; ?>">
                                             </div>
                                         </div>
-                                        <!--end::Group-->
-                                        <!--begin::Group-->
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-3 text-lg-right text-left">Email Address</label>
-                                            <div class="col-9">
-                                                <div class="input-group input-group-lg input-group-solid">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="la la-at"></i>
-                                                        </span>
-                                                    </div>
-                                                    <input type="text" class="form-control readonly form-control-lg form-control-solid" name="email" value="<?php echo $user->email; ?>" placeholder="anna.krox@loop.com" />
-                                                </div>
-                                                <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                        <div class="row">
+                                            <div class="col-sm-4 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>Country:</label>
+                                                <input type="text" class="form-control"   name="country" value="<?php echo $user->country; ?>">
+                                            </div>
+                                            <div class="col-sm-4 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>City:</label>
+                                                <input type="text" class="form-control"   name="city" value="<?php echo $user->city; ?>">
+                                            </div>
+                                            <div class="col-sm-4 form-group fv-plugins-icon-container">
+                                                <label><i class="fab fa-yelp" style="line-height: 39px;color: #50aec3;margin-right:5px"></i>Zip:</label>
+                                                <input type="text" class="form-control"   name="zip_code" value="<?php echo $user->zip_code; ?>">
                                             </div>
                                         </div>
                                         <!--end::Group-->

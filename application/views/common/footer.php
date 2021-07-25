@@ -199,6 +199,22 @@
 
 		<script type="text/javascript">
 			$(document).ready(function(){
+
+				$(document).on('click','.sendinbluecontact',function(){
+					var email = $(this).data('email');
+					$.ajax({
+						url : '<?=base_url("api/sendinblue/add_contact")?>',
+						method: 'post',
+				          data: {
+				          	email : email
+				          },
+				          dataType: "json",
+				          success: function( response ) {
+				          	console.log(response);
+				          }
+					});
+				});
+
 				$(document).on('click','.applycode',function(){
 					var getCode = $('.walletcode').val();
 					$.ajax({

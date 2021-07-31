@@ -78,11 +78,7 @@ $db['default'] = array(
 	'hostname' => '178.128.153.171',
 	'username' => 'dev',
 	'password' => '#47AOSchpU3*tu$n!zXKsDyFz6s%hu2M',
-<<<<<<< HEAD
-	'database' => 'cba_staging',
-=======
-	'database' => 'staging_cba',
->>>>>>> e3b7bd6bb9057b0ad82ad8c1f25f535d1444293d
+	'database' => 'cba',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

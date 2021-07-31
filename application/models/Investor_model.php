@@ -234,10 +234,12 @@ class Investor_model extends CI_Model
 			$this->db->where('p.bank is not null');
 			$this->db->where('p.status',1);	
 			}
-			if(isset($id)){
-			$this->db->where('i.created_by',$id);
-			}else{
-			$this->db->where('i.created_by',$this->session->userdata('user_id'));
+			if($this->session->userdata('user_id') != 1){
+				if(isset($id)){
+				$this->db->where('i.created_by',$id);
+				}else{
+				$this->db->where('i.created_by',$this->session->userdata('user_id'));
+				}
 			}
 			if(isset($investment_id)){
 			$this->db->where('i.id',$investment_id);

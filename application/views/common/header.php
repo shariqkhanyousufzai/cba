@@ -252,10 +252,8 @@
 <span class="menu-text">Create Promo</span>
 </a>
 </li>
-
-
-<li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'investments' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
-<a href="<?php echo base_url('investor/investments'); ?>" class="menu-link">
+<li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'my_investment_list' || $this->uri->segment(2) == 'pay_investment' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
+<a href="<?php echo base_url('investor/my_investment_list'); ?>" class="menu-link">
 <span class="svg-icon menu-icon">
 <!--begin::Svg Icon | path:<?=$assets?>/media/svg/icons/Design/Layers.svg-->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -267,7 +265,7 @@
 </svg>
 <!--end::Svg Icon-->
 </span>
-<span class="menu-text">All Investments</span>
+<span class="menu-text">My Investments</span>
 </a>
 </li>
 <?php

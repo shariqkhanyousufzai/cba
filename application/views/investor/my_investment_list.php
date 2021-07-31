@@ -38,7 +38,7 @@
                             <tr>
                                 <th>ID</th>
                                 <?php
-                                if($this->session->userdata('user_id') != 1){
+                                if($this->session->userdata('user_id') == 1){
                                 ?>
                                 <th>Name</th>
                                 <?php
@@ -59,7 +59,7 @@
                             <tr>
                                 <td><?= $i ?></td>
                                 <?php
-                                if($this->session->userdata('user_id') != 1){
+                                if($this->session->userdata('user_id') == 1){
                                 ?>
                                 <td><?= $getPayment->first_name.' '.$getPayment->last_name?></td>
                                 <?php

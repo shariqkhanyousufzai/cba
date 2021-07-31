@@ -37,6 +37,13 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <?php
+                                if($this->session->userdata('user_id') != 1){
+                                ?>
+                                <th>Name</th>
+                                <?php
+                                }
+                                ?>
                                 <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
@@ -51,6 +58,13 @@
                             ?> 
                             <tr>
                                 <td><?= $i ?></td>
+                                <?php
+                                if($this->session->userdata('user_id') != 1){
+                                ?>
+                                <td><?= $getPayment->first_name.' '.$getPayment->last_name?></td>
+                                <?php
+                                }
+                                ?>
                                 <td><?= $getPayment->bank?></td>
                                 <td><?= asDollars(round($getPayment->total_investment)) ?></td>
                                 <td>

@@ -265,7 +265,7 @@
 </svg>
 <!--end::Svg Icon-->
 </span>
-<span class="menu-text">My Investments</span>
+<span class="menu-text">All Investments</span>
 </a>
 </li>
 <?php

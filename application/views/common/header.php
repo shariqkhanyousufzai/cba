@@ -118,6 +118,8 @@
 		.join(' ');
 	};
 
+
+
 </script>
 </head>
 <!--end::Head-->
@@ -402,6 +404,7 @@
 <div class="topbar-item ml-4" id="kt_quick_user_toggle">
 	<div class="alert alert-dark mr-5 mt-3">
 		My Wallet :  <span id="mywallet"><?= asDollars(wallet())  ?> </span>
+		<input type="hidden" id="mywallet_hid" value="<?=wallet()?>">
 	</div>
 
 	<div data-toggle="tooltip" class="btn btn-icon btn-light-primary h-40px w-40px p-0" id="kt_quick_user_toggle">

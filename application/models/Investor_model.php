@@ -45,7 +45,7 @@ class Investor_model extends CI_Model
 
 	public function getContractByLang(){
 		$this->db->select('*');
-		$this->db->from('contract');
+		$this->db->from('contract'); 
 		$this->db->where('language',DEFAULT_CONTRACT);
 		$q = $this->db->get();
 		return $q->result()[0];
@@ -215,13 +215,14 @@ class Investor_model extends CI_Model
 	// 	}
 	// }
 
-	public function getPayments($type = NULL,$id = NULL){
+	public function getPayments($type = NULL,$id = NULL,$investment_id =  NULL){
 		$res = [
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,ic.contract,p.status,p.invoice');
+			$this->db->select('u.first_name,u.last_name,u.city,u.country,u.zip_code,u.address,c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,p.status,p.invoice,c.cost_per_share');
 			$this->db->from('investments i');
+			$this->db->join('users u','u.id = i.created_by','LEFT');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');
 			$this->db->join('payments p','i.payment_id = p.id','LEFT');
 			$this->db->join('i_contracts ic','i.payment_id = ic.payment_id ','LEFT');
@@ -238,6 +239,30 @@ class Investor_model extends CI_Model
 			}else{
 			$this->db->where('i.created_by',$this->session->userdata('user_id'));
 			}
+			if(isset($investment_id)){
+			$this->db->where('i.id',$investment_id);
+			}
+			$q = $this->db->get();
+			if($q->num_rows() > 0){
+				$res["data"] = $q->result();
+				return $res;
+			}
+		}catch(\Exception $e)
+		{
+			$res["msg"] = "failed";
+			$res["trace"] = ["class" => $this->router->fetch_class() , "method" => $this->router->fetch_method()] ;
+			return $res;
+		}
+	}
+
+	public function getLiveContract(){
+		$res = [
+			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
+		try
+		{
+			$this->db->select('*');
+			$this->db->from('contract');
+			$this->db->where('id',1);
 			$q = $this->db->get();
 			if($q->num_rows() > 0){
 				$res["data"] = $q->result();

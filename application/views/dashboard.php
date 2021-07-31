@@ -13,7 +13,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 				<div class="d-flex align-items-baseline flex-wrap mr-5">
 					<!--begin::Page Title-->
 					<h5 class="text-dark font-weight-bold my-1 mr-5">Dashboard </h5>
-					<button class="btn btn-info sendinbluecontact" data-email="alisa@gmail.com">Send In Blue</button>
+					
 					<!--end::Page Title-->
 				</div>
 				<!--end::Page Heading-->
@@ -209,14 +209,11 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 			?>
 			<div class="col-sm-12 ">
 				<div class="card card-custom card-stretch gutter-b">
-						<!--begin::Header-->
 						<div class="card-header border-0 pt-6">
 							<h3 class="card-title">
 								<span class="card-label font-weight-bolder font-size-h4 text-dark-75">My Investment</span>
 							</h3>
 						</div>
-						<!--end::Header-->
-						<!--begin::Body-->
 						<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
 							<div class="row">
                                 <div class="col-sm-6">
@@ -233,21 +230,17 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
                                 </div>
                             </div>
 						</div>
-					<!--end::Body-->
 				</div>
 				
 			</div>
 			
-			<div class="col-sm-12 ">
+			<!-- <div class="col-sm-12 ">
 				<div class="card card-custom card-stretch gutter-b">
-						<!--begin::Header-->
 						<div class="card-header border-0 pt-6">
 							<h3 class="card-title">
 								<span class="card-label font-weight-bolder font-size-h4 text-dark-75">My Investment</span>
 							</h3>
 						</div>
-						<!--end::Header-->
-						<!--begin::Body-->
 						<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
 							<table class="table table-bordered table-checkable" id="example">
                         <thead>
@@ -256,7 +249,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
                                 <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th>Month/Date/Year</th>
+                                <th>Date</th>
                                 <th>Documents</th>
                             </tr>
                         </thead>
@@ -308,10 +301,9 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
                         </tbody>
                     </table>
 						</div>
-					<!--end::Body-->
 				</div>
 				
-			</div>
+			</div> -->
 			<?php
 			}
 			?>

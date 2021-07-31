@@ -80,9 +80,31 @@ class Investor extends CI_Controller {
 		$this->page_construct('investor/pay_investment',$data);
 	}
 
-	public function view_investment()
+	public function view_investment($investment_id = NULL)
 	{
-		$data['getPayments']['data'] = $this->investor_model->getPayments();
+		$channelArray =[
+			'food' => 'Food lover Distrct (ID no. UC5OXEAL2wW7ccJu3gEZnl0w)',
+			'music' => 'Music Distrct (ID no. UChE0y4mY1TEsmY0EMKvgFiA)',
+			'sport' => 'Sport Distrct (ID no. UCtai6tFt8TcMXTB--lLQ-dQ)',
+			];
+		$data['getPayments']['data'] = $this->investor_model->getPayments(NULL,NULL,$investment_id);
+		$data['getContract']['data'] = $this->investor_model->getLiveContract();
+		$Replace_contract = $data['getContract']['data']['data'][0]->body;
+		$Replace_contract = str_replace("{Name}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->first_name.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{First Name}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->first_name.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Last Name}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->last_name.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Address}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->address.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{City}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->city.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{State}",'<span class="text-warning"></span>',$Replace_contract);
+		$Replace_contract = str_replace("{Kr}",'<span class="text-warning"></span>',$Replace_contract);
+		$Replace_contract = str_replace("{Business Name}",'<span class="text-warning"></span>',$Replace_contract);
+		$Replace_contract = str_replace("{Zip Code}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->zip_code.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Country}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->country.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Own}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->amount/$data['getPayments']['data']['data'][0]->cost_per_share.'%</span>',$Replace_contract);
+		$Replace_contract = str_replace("{PriceForSubTotal}",'<span class="text-warning">'.$data['getPayments']['data']['data'][0]->amount.'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Channel}",'<span class="text-warning">'.$channelArray[$data['getPayments']['data']['data'][0]->name].'</span>',$Replace_contract);
+		$Replace_contract = str_replace("{Date}",'<span class="text-warning">'.date("Y-m-d",strtotime($data['getPayments']['data']['data'][0]->created_on)).'</span>',$Replace_contract);
+		$data['fetchContract'] = $Replace_contract;
 		$this->page_construct('investor/view_investment',$data);
 	}
 

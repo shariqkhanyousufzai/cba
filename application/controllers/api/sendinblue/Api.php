@@ -25,32 +25,9 @@ class Api extends CI_Controller {
     }
 
 
-    function add_contact($email = NULL){
-        if($email == NULL){
-        $email = $this->input->post('email');
-        }
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.sendinblue.com/v3/contacts',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{"email": "'.$email.'"}',
-          CURLOPT_HTTPHEADER => array(
-            'content-type: application/json',
-            'api-key: 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'
-          ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        echo $response;
+    function sendinblue_addcontact_curlpost($data,$url){
+        sendinblue_addcontact_curlpost($data,$url);
     }
+       
 
 }

@@ -94,3 +94,7 @@ define('SIGNUP_AMOUNT', 5);
 define('PAYPAL','Ad6iIWR0duwAJ9eb4jdDtsLiQWwVHhC-QUwZ5dCR32KQ0EZHhbGsQ01tA1271hof1K0I5vpvau_Tp9XJ'); //PAYPAL LIVE
 
 define('tbl_paypal_pay_log', 'paypal_pay_log');
+define('CURLJSONHEADER', 'content-type: application/json');
+define('SENDINBLUE_CONTACT_API', 'https://api.sendinblue.com/v3/contacts');
+define('SENDINBLUE_SIGNUPID', 11);
+define('SENDINBLUE_KEY', 'api-key: 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');

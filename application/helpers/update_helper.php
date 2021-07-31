@@ -282,13 +282,18 @@ if ( ! function_exists('send_mail'))
         }
  }
 
- if ( ! function_exists('sendinblue_addcontact'))
+ if ( ! function_exists('curlpost'))
  { 
-    function sendinblue_addcontact($email)
+
+    // https://api.sendinblue.com/v3/contacts
+    function curlpost($data,$url,$header)
     {
+
+        $json = json_encode($data);
+        // error_log($json.'\n', 3, 'C:\xampp\htdocs\cba\application\logs\error.log');
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.sendinblue.com/v3/contacts',
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -296,10 +301,10 @@ if ( ! function_exists('send_mail'))
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>'{"email": "'.$email.'"}',
+            CURLOPT_POSTFIELDS => $json,
             CURLOPT_HTTPHEADER => array(
-                'content-type: application/json',
-                'api-key: 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'
+                $header,
+                SENDINBLUE_KEY
             ),
         ));
         $response = curl_exec($curl);

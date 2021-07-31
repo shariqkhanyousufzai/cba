@@ -618,7 +618,10 @@ class Auth extends CI_Controller
 			MY_MARKER;
 			echo $str;
 			$this->checkValidCode($this->input->post('code'),$lastId);
-			sendinblue_addcontact($identity);
+			// sendinblue_addcontact($identity);
+			// $sendinbluecontact_data = ["listIds" => [SENDINBLUE_SIGNUPID], "email" => $identity];
+			// $res = curlpost($sendinbluecontact_data,SENDINBLUE_CONTACT_API,CURLJSONHEADER);
+			// error_log($res.'\n', 3, 'C:\xampp\htdocs\cba\application\logs\error.log');
 			$this->direct_login($identity,$password);
 			// check to see if we are creating the user
 			// redirect them back to the admin page 

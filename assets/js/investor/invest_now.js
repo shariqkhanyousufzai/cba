@@ -52,6 +52,7 @@ var investmenForm = function () {
 			}
 
 			if(wizard.getStep() == 2){
+				var walletAmountRes = $('#mywallet_hid').val();
 				if($('input[name="initial_investment_'+checkChannel[0]+'"]').val() == ''){
 					Swal.fire({
 							text: "Sorry, looks like you did not select any amount",
@@ -63,7 +64,7 @@ var investmenForm = function () {
 							}
 						});
 					return false;
-				}else if( parseInt($('input[name="initial_investment_'+checkChannel[0]+'"]').val()) >= parseInt(walletAmount)){
+				}else if( parseInt($('input[name="initial_investment_'+checkChannel[0]+'"]').val()) >= parseInt(walletAmountRes)){
 					console.log("Firing add to cart pixel");
 					fbq('track', 'AddToCart', {});	
 					console.log("Firing InitiateCheckoutpixel");
@@ -143,10 +144,10 @@ var investmenForm = function () {
 			var totalValContract = $('input[name="initial_investment_'+channelSelected+'"]').val();
 			ChannelReplace += '</ol>';
 			if(wizard.getStep() == 3){
-				var walletAmount = $('#mywallet').html().replace("$", "");
-				var walletAmountRes = walletAmount.replace("$",'');
-				var totaltxt = asDollars(parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseFloat(walletAmountRes));
-				if((parseInt($('input[name="initial_investment_'+channelSelected+'"]').val()) - parseInt(walletAmount)) == 0){
+				var walletAmountRes = $('#mywallet_hid').val();
+				var channelAmount = parseFloat($('input[name="initial_investment_'+channelSelected+'"]').val());
+				var totaltxt = channelAmount - parseFloat(walletAmountRes);
+				if(totaltxt == 0){
 					$('.showwallet').show();
 					$('.hidepayments').hide();
 
@@ -154,8 +155,6 @@ var investmenForm = function () {
 					$('.showwallet').hide();
 					$('.hidepayments').show();
 				}
-
-				
 
 				$('.wallet_txt').html('$'+asDollars(parseFloat(walletAmountRes)));
 				$('.channelnametxt').html(channelSelected);
@@ -169,7 +168,7 @@ var investmenForm = function () {
 				}else if(channelSelected == 'food'){
 					share = food_cost_per_share;
 				}
-				var OwnContract = (parseFloat(totaltxt) * 100)/parseFloat(share)+'%';
+				var OwnContract = parseFloat(walletAmountRes) /parseFloat(share)+'%';
 				var replaced = getContract
 				.replace("{Name}", '<span class="text-warning">'+ReplaceArray['Name']+'</span>')
 				.replace("{Address}", '<span class="text-warning">'+ReplaceArray['Address']+'</span>')
@@ -184,6 +183,8 @@ var investmenForm = function () {
 				.replace("{Own}", '<span class="text-warning">'+OwnContract+'</span>')
 				.replace("{PriceForSubTotal}", '<span class="text-warning">'+totalValContract+'</span>')
 				.replace("{Kr}", '<span class="text-warning">'+ChannelVat+'</span>')
+				.replace("{Business Name}", '<span class="text-warning"></span>')
+				.replace("{State}", '<span class="text-warning"></span>')
 
 				$('.contract').html(replaced);
 			}
@@ -206,7 +207,7 @@ var investmenForm = function () {
 			if(wizard.getStep() == 3){
 				$('.promodiv').hide();
 				totalVal =  $('input[name="initial_investment_'+channelSelected+'"]').val();
-				var wallet_amount = parseInt($('#mywallet').html().replace("$", ""));
+				var wallet_amount = parseInt($('#mywallet_hid').val());
 				deleteStep = wizard.getStep();
 				$('.save_msg').html(`<div class="alert alert-success alert-dismissible fade show">Your Channel Information Has Been Saved! Please Select Payment  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
@@ -517,14 +518,14 @@ $(document).ready(function(){
 	          	console.log(response);
 	          	if( response.msg == 'success'){
 	          		// location.reload();	
-				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
+				    var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet_hid').val());
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
 					console.log("Fired purchase pixel not firing old lead track pixel");
 	          		window.location.href = BASEURL+'investor/my_investment_list';
 	          	}else if( response == 'updateinfo'){
-	          		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
+	          		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet_hid').val());
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
@@ -550,7 +551,7 @@ $(document).ready(function(){
 	          dataType: "json",
 	          success: function( response ) {
 	          	if( response.msg == 'success'){
-					var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", ""));
+					var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet_hid').val());
 					console.log("About to fire purchase pixel");
 					console.log("Amount = " + total_amount_paid);
 					fbq('track', 'Purchase', {currency: "USD", value: total_amount_paid});
@@ -577,7 +578,7 @@ $(document).ready(function(){
  		return actions.order.create({
  			purchase_units: [{
  				amount: {
- 					value:  parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", "")),
+ 					value:  parseInt($('.total_investment').val()) - parseInt($('#mywallet_hid').val()),
  				}
  			}]
  		});
@@ -640,7 +641,7 @@ $(document).ready(function(){
 
     checkoutButton.addEventListener("click", function () {
     	var fd = new FormData();
-		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet').html().replace("$", "") );
+		var total_amount_paid = parseInt($('.total_investment').val()) - parseInt($('#mywallet_hid').val());
 		fd.append('total', total_amount_paid);
 		fd.append('payment_id', lastPaymentId);
 		fd.append('success_url', BASEURL+'stripe/success/'+lastPaymentId + "/" + total_amount_paid);
@@ -694,4 +695,8 @@ $(document).ready(function(){
     setTimeout(function(){
     	$('.checkedchan').trigger('click');
     },500)
+
+   
+    
 })
+

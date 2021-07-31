@@ -40,7 +40,7 @@
                                 <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th>Month/Date/Year</th>
+                                <th>Date </th>
                                 <th>Documents</th>
                             </tr>
                         </thead>
@@ -87,11 +87,11 @@
                                     <?php
                                     }
                                     ?>
-                                    <a href="#" data-id="<?=$getPayment->id?>" class="btn  btn-md w-lg-100 btn-dark btn-icon send_msg actionsbtn ml-1" title="Send Message">
+                                    <!-- <a href="#" data-id="<?=$getPayment->id?>" class="btn  btn-md w-lg-100 btn-dark btn-icon send_msg actionsbtn ml-1" title="Send Message">
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-envelope"></i>
                                         </span>
-                                    </a>
+                                    </a> -->
                                 </td>
                             </tr>
                             <?php

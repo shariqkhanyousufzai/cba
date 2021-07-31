@@ -7,7 +7,7 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container">
-            <!--begin::Notice-->
+            <!--begin::Notice--> 
             <div class="card card-custom gutter-b"></div>
             <!--end::Notice-->
             <!--begin::Card-->
@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="contract">
-                                <?=$getPayments['data']['data'][0]->contract?>
+                                <?=$fetchContract?>
                             </div>
                         </div>
                   </div>

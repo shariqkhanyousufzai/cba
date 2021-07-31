@@ -204,9 +204,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 				</div>
 				<!--end::Stats Widget 2-->
 			</div>
-			<?php
-			if($this->session->userdata('group_name') == 'investor'){
-			?>
+			
 			<div class="col-sm-12 ">
 				<div class="card card-custom card-stretch gutter-b">
 						<div class="card-header border-0 pt-6">
@@ -304,9 +302,7 @@ $getTotalSubs = $data_channels['music']['subscriber'] + $data_channels['food']['
 				</div>
 				
 			</div> -->
-			<?php
-			}
-			?>
+			
 		</div>
 		<!--end::Row-->
 		<!--end::Dashboard-->

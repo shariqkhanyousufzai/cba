@@ -220,7 +220,7 @@ class Investor_model extends CI_Model
 			"status" => "OK", "msg" => "success","rows_affected" => 0, "data" => [] ];
 		try
 		{
-			$this->db->select('u.first_name,u.last_name,u.city,u.country,u.zip_code,u.address,c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,p.status,p.invoice,c.cost_per_share');
+			$this->db->select('u.first_name,u.last_name,u.email,u.city,u.country,u.zip_code,u.address,c.name,i.amount,i.id as investment_id,p.bank,p.total_investment,p.created_on,p.id,p.status,p.invoice,c.cost_per_share');
 			$this->db->from('investments i');
 			$this->db->join('users u','u.id = i.created_by','LEFT');
 			$this->db->join('channels c','i.channel_id = c.id','LEFT');

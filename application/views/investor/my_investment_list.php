@@ -44,6 +44,7 @@
                                 <?php
                                 }
                                 ?>
+                                <th>Email</th>
                                 <th>Payment Method</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
@@ -65,6 +66,7 @@
                                 <?php
                                 }
                                 ?>
+                                <td><?= $getPayment->email?></td>
                                 <td><?= $getPayment->bank?></td>
                                 <td><?= asDollars(round($getPayment->total_investment)) ?></td>
                                 <td>

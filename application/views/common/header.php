@@ -268,9 +268,6 @@
 <span class="menu-text">All Investments</span>
 </a>
 </li>
-<?php
-}else{
-?>
 <li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'investor_profile' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
 <a href="<?php echo base_url('investor/list'); ?>" class="menu-link">
 <span class="svg-icon menu-icon">
@@ -287,6 +284,9 @@
 <span class="menu-text">Investors</span>
 </a>
 </li>
+<?php
+}else{
+?>
 <li class="menu-item  <?= ($this->uri->segment(1) == 'investor'  && $this->uri->segment(2) == 'invest_now' ) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
 <a href="<?php echo base_url('investor/invest_now'); ?>" class="menu-link">
 <span class="svg-icon menu-icon">

@@ -268,10 +268,9 @@
 <span class="menu-text">All Investments</span>
 </a>
 </li>
-<li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'investor_profile' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
+<!-- <li class="menu-item  <?= ($this->uri->segment(1) == 'investor' && ($this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'investor_profile' )) ? 'menu-item-active' : ''; ?>" aria-haspopup="true">
 <a href="<?php echo base_url('investor/list'); ?>" class="menu-link">
 <span class="svg-icon menu-icon">
-<!--begin::Svg Icon | path:<?=$assets?>/media/svg/icons/Design/Layers.svg-->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 		<rect x="0" y="0" width="24" height="24"></rect>
@@ -279,11 +278,10 @@
 		<rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519)" x="16.3255682" y="2.94551858" width="3" height="18" rx="1"></rect>
 	</g>
 </svg>
-<!--end::Svg Icon-->
 </span>
 <span class="menu-text">Investors</span>
 </a>
-</li>
+</li> -->
 <?php
 }else{
 ?>
